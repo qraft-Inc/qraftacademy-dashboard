@@ -1,0 +1,6 @@
+
+
+// Select the database to use.
+use('qraftacademy');
+
+db.users.deleteOne({"_id": ObjectId("6340ee2de590ce6e8cbf9a21")})
