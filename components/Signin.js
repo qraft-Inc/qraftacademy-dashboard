@@ -5,8 +5,26 @@ import Footer from "./Footer";
 import logo from "../public/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 export default function Signin() {
+
+  // form validation with yup Lib
+  const validationSchema = Yup.object({
+    user: Yup.object({
+      email: Yup.string().email("Invalid email format").required("Required"),
+      password: Yup.string().required("Required"),
+    })
+  });
+
+  // initial form value
+  const initialValues = {
+    user: {
+      email: "",
+      fullname: "",
+    }
+  };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -19,8 +37,21 @@ export default function Signin() {
     }
   }, [router, session]);
 
+  // const onSubmit = async (values, onSubmitProps) => {
+  //   await axios
+  //     .post("/api/developers", values)
+  //     .then((response) => {
+  //       setSuccess(true);
+  //       setValue(response.data.name);
+  //       onSubmitProps.resetForm();
+  //     })
+  //     .catch((error) => {
+  //       setError(true);
+  //       setValue(error.response.status);
+  //     });
+  // };
+
   const handleSubmit = async (e) => {
-    // try {
     e.preventDefault();
     const result = await signIn("credentials", {
       redirect: false,
@@ -59,49 +90,57 @@ export default function Signin() {
               Sign in to your account
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-2">
-              <div className="rounded-md shadow-sm space-y-2">
-                <div>
-                  <input
-                    id="email-address"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={onSubmit}
+              className="w-full"
+            >
+              <Form>
+                {/* <form onSubmit={handleSubmit} className="space-y-2"> */}
+                <div className="rounded-md shadow-sm space-y-2">
+                  <div>
+                    <Field
+                    name="user.email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Email address"
+                      value={email}
+                      // onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                  <Field
+                      name="user.password"
+                      type="password"
+                      autoComplete="current-password"
+                      required
+                      className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Password"
+                      value={password}
+                      // onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                <div className="flex flex-col">
+                  <button className="rounded-lg bg-[#4092CF] text-base px-3 py-2 hover:bg-blue-400 transition duration-300">
+                    Login
+                  </button>
+                  <Link href="/forgot-password" passHref>
+                    <a className="text-blue-500 text-sm text-right">
+                      Forgot Password ?
+                    </a>
+                  </Link>
+                  {error && (
+                    <span className="text-red-500 text-center">{error}</span>
+                  )}
                 </div>
-              </div>
-              <div className="flex flex-col">
-                <button className="rounded-lg bg-[#4092CF] text-base px-3 py-2 hover:bg-blue-400 transition duration-300">
-                  Login
-                </button>
-                <Link href="/forgot-password" passHref>
-                  <a className="text-blue-500 text-sm text-right">
-                    Forgot Password ?
-                  </a>
-                </Link>
-                {error && (
-                  <span className="text-red-500 text-center">{error}</span>
-                )}
-              </div>
-            </form>
+                {/* </form> */}
+              </Form>
+            </Formik>
           </div>
         </div>
       </div>
