@@ -32,7 +32,7 @@ export default NextAuth({
         await db.connect();
         const email = credentials.email;
         const password = credentials.password;
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ user:email });
         if (!user) {
           throw new Error("User does not exist");
         }

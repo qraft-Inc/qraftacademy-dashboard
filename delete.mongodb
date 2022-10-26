@@ -3,4 +3,8 @@
 // Select the database to use.
 use('qraftacademy');
 
-db.users.deleteOne({"_id": ObjectId("6340ee2de590ce6e8cbf9a21")})
+// db.users.deleteOne({"_id": ObjectId("6358a24cc3b31d4d7e7c0968")})
+
+// db.users.find()
+
+db.users.findOne({"user.email":"admin@yahoo.com"})
