@@ -16,7 +16,7 @@ export default function Signin() {
   const initialValues = {
     user: {
       email: "",
-      fullname: "",
+      password: "",
     },
   };
   // const [email, setEmail] = useState("");
@@ -39,18 +39,6 @@ export default function Signin() {
 
   const onSubmit = async (values, onSubmitProps) => {
     console.log("form values ", values);
-    // await axios
-    //   .post("/api/developers", values)
-    //   .then((response) => {
-    //     setSuccess(true);
-    //     setValue(response.data.name);
-    //     onSubmitProps.resetForm();
-    //   })
-    //   .catch((error) => {
-    //     setError(true);
-    //     setValue(error.response.status);
-    //   });
-
     const result = await signIn("credentials", {
       redirect: false,
       values,

@@ -10,28 +10,31 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user?._id) token._id = user._id;
-      if (user?.isAdmin) token.isAdmin = user.isAdmin;
-      if (user?.fullname) token.fullname = user.fullname;
-      if (user?.image) token.image = user.image;
+      if (user?.user._id) token._id = user._id;
+      if (user?.user.isAdmin) token.isAdmin = user.isAdmin;
+      if (user?.user.fullname) token.fullname = user.fullname;
+      if (user?.user.image) token.image = user.image;
 
       return token;
     },
     async session({ session, token }) {
-      if (token?._id) session.user._id = token._id;
-      if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
-      if (token?.fullname) session.user.fullname = token.fullname;
-      if (token?.image) token.image = token.image;
+      if (token?.user_id) session.user._id = token.user._id;
+      if (token?.user.isAdmin) session.user.isAdmin = token.user.isAdmin;
+      if (token?.user.fullname) session.user.fullname = token.user.fullname;
+      if (token?.user.image) token.image = token.user.image;
 
       return session;
     },
-  },
+  },                                                                                                                                                                                                             
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
         await db.connect();
-        const email = credentials.email;
-        const password = credentials.password;
+        // const email = credentials.email;
+        // const password = credentials.password;
+
+        const email = credentials.user.email;
+        const password = credentials.user.password;
         const user = await User.findOne({ user:email });
         if (!user) {
           throw new Error("User does not exist");
