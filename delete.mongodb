@@ -7,4 +7,4 @@ use('qraftacademy');
 
 // db.users.find()
 
-db.users.findOne({"user.email":"admin@yahoo.com"})
+db.users.findOne({"admin.email":"admin@gmail.com"})

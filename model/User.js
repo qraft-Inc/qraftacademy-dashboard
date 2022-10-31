@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
-    user: {
+    admin: {
       email: { type: String, required: true, unique: true },
       password: { type: String },
       fullname: { type: String },
@@ -66,8 +66,8 @@ userSchema.pre("save", async function (next) {
   try {
 
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(this.user.password, salt);
-    this.user.password = hashPassword
+    const hashPassword = await bcrypt.hash(this.admin.password, salt);
+    this.admin.password = hashPassword
     next()
   }
   catch (error) {

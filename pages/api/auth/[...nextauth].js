@@ -35,10 +35,12 @@ export default NextAuth({
 
         const email = credentials.user.email;
         const password = credentials.user.password;
-        const user = await User.findOne({ user:email });
+        const user = await User.findOne({ email:admin.email });
+        // console.log(user)
         if (!user) {
           throw new Error("User does not exist");
         }
+      
         if (user && bcrypt.compareSync(password, user.password)) {
           return {
             _id: user._id,
