@@ -5,6 +5,7 @@ use('qraftacademy');
 
 // db.users.deleteOne({"_id": ObjectId("6358a24cc3b31d4d7e7c0968")})
 
-// db.users.find()
+db.users.find({"_id": ObjectId("636008c6d6e4ab67a475f43c")})
 
-db.users.findOne({"admin.email":"admin@gmail.com"})
+// db.users.findOne({"admin.email":"admin@gmail.com"})
+

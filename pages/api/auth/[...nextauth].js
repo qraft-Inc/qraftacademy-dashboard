@@ -10,18 +10,18 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user?.user._id) token._id = user._id;
-      if (user?.user.isAdmin) token.isAdmin = user.isAdmin;
-      if (user?.user.fullname) token.fullname = user.fullname;
-      if (user?.user.image) token.image = user.image;
+      if (user?._id) token._id = user._id;
+      if (user?.admin.isAdmin) token.admin.isAdmin = user.admin.isAdmin;
+      if (user?.admin.fullname) token.admin.fullname = user.admin.fullname;
+      if (user?.admin.image) token.admin.image = user.admin.image;
 
       return token;
     },
     async session({ session, token }) {
-      if (token?.user_id) session.user._id = token.user._id;
-      if (token?.user.isAdmin) session.user.isAdmin = token.user.isAdmin;
-      if (token?.user.fullname) session.user.fullname = token.user.fullname;
-      if (token?.user.image) token.image = token.user.image;
+      if (token?._id) session._id = token.user._id;
+      if (token?.admin.isAdmin) session.admin.isAdmin = token.admin.isAdmin;
+      if (token?.admin.fullname) session.admin.fullname = token.admin.fullname;
+      if (token?.admin.image) token.admin.image = token.admin.image;
 
       return session;
     },

@@ -14,7 +14,7 @@ export default function Signin() {
 
   // initial form value
   const initialValues = {
-    user: {
+    admin: {
       email: "",
       password: "",
     },
@@ -25,7 +25,7 @@ export default function Signin() {
 
   // form validation with yup Lib
   const validationSchema = Yup.object({
-    user: Yup.object({
+    admin: Yup.object({
       email: Yup.string().email("Invalid email format").required("Required"),
       password: Yup.string().required("Required"),
     }),
@@ -36,6 +36,8 @@ export default function Signin() {
       router.push("/dashboard");
     }
   }, [router, session]);
+
+  console.log({session})
 
   const onSubmit = async (values, onSubmitProps) => {
     console.log("form values ", values);
@@ -102,7 +104,7 @@ export default function Signin() {
                 <div className="rounded-md shadow-sm space-y-2">
                   <div>
                     <Field
-                      name="user.email"
+                      name="admin.email"
                       type="email"
                       aria-label="email"
                       autoComplete="email"
@@ -113,13 +115,13 @@ export default function Signin() {
                       // onChange={(e) => setEmail(e.target.value)}
                     />
                     <div className="font-bold text-red-600 text-sm">
-                      <ErrorMessage name="user.email" />
+                      <ErrorMessage name="admin.email" />
                     </div>
                   </div>
 
                   <div>
                     <Field
-                      name="user.password"
+                      name="admin.password"
                       type="password"
                       aria-label="password"
                       // autoComplete="current-password"
@@ -130,7 +132,7 @@ export default function Signin() {
                       // onChange={(e) => setPassword(e.target.value)}
                     />
                     <div className="font-bold text-red-600 text-sm">
-                      <ErrorMessage name="user.password" />
+                      <ErrorMessage name="admin.password" />
                     </div>
                   </div>
                 </div>
