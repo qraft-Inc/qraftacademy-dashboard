@@ -13,23 +13,23 @@ export default function Signin() {
   const { data: session } = useSession();
 
   // initial form value
-  const initialValues = {
-    admin: {
-      email: "",
-      password: "",
-    },
-  };
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  // const initialValues = {
+  //   admin: {
+  //     email: "",
+  //     password: "",
+  //   },
+  // };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   // form validation with yup Lib
-  const validationSchema = Yup.object({
-    admin: Yup.object({
-      email: Yup.string().email("Invalid email format").required("Required"),
-      password: Yup.string().required("Required"),
-    }),
-  });
+  // const validationSchema = Yup.object({
+  //   admin: Yup.object({
+  //     email: Yup.string().email("Invalid email format").required("Required"),
+  //     password: Yup.string().required("Required"),
+  //   }),
+  // });
 
   useEffect(() => {
     if (session?.user) {
@@ -39,28 +39,16 @@ export default function Signin() {
 
   console.log({session})
 
-  const onSubmit = async (values, onSubmitProps) => {
-    console.log("form values ", values);
-    const result = await signIn("credentials", {
-      redirect: false,
-      values,
-    });
-    // onSubmitProps.resetForm();
-    if (result?.error) {
-      setError(result.error);
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-    }
-  };
+  // const onSubmit = async (values, onSubmitProps) => {
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
   //   const result = await signIn("credentials", {
   //     redirect: false,
-  //     email,
-  //     password,
+  //     values,
   //   });
+  //   console.log("form values ", values);
+  //   console.log(result);
+
+  // onSubmitProps.resetForm();
   //   if (result?.error) {
   //     setError(result.error);
   //     setTimeout(() => {
@@ -68,6 +56,22 @@ export default function Signin() {
   //     }, 5000);
   //   }
   // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+    console.log(result)
+    if (result?.error) {
+      setError(result.error);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  };
 
   return (
     <div className="flex flex-col h-screen justify-between">
@@ -93,47 +97,61 @@ export default function Signin() {
               Sign in to your account
             </h2>
 
-            <Formik
+            {/* <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
               className="w-full"
-            >
-              <Form>
-                {/* <form onSubmit={handleSubmit} className="space-y-2"> */}
+            > */}
+              {/* <Form> */}
+                <form onSubmit={handleSubmit} className="space-y-2">
                 <div className="rounded-md shadow-sm space-y-2">
                   <div>
-                    <Field
+                    {/* <Field
                       name="admin.email"
                       type="email"
                       aria-label="email"
                       autoComplete="email"
-                      // required
+                      className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Email address"
+                    /> */}
+                    {/* <div className="font-bold text-red-600 text-sm">
+                      <ErrorMessage name="admin.email" />
+                    </div> */}
+
+                    <input
+                      name="admin.email"
+                      type="email"
+                      aria-label="email"
+                      autoComplete="email"
                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                       placeholder="Email address"
                       // value={email}
-                      // onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
-                    <div className="font-bold text-red-600 text-sm">
-                      <ErrorMessage name="admin.email" />
-                    </div>
                   </div>
 
                   <div>
-                    <Field
+                    {/* <Field
                       name="admin.password"
                       type="password"
                       aria-label="password"
-                      // autoComplete="current-password"
-                      // required
                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                       placeholder="Password"
-                      // value={password}
-                      // onChange={(e) => setPassword(e.target.value)}
                     />
                     <div className="font-bold text-red-600 text-sm">
                       <ErrorMessage name="admin.password" />
-                    </div>
+                    </div> */}
+                   
+                   <input
+                      name="admin.password"
+                      type="password"
+                      aria-label="password"
+                      className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Password"
+                    // value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                   </div>
                 </div>
                 <div className="flex flex-col">
@@ -152,9 +170,9 @@ export default function Signin() {
                     <span className="text-red-500 text-center">{error}</span>
                   )} */}
                 </div>
-                {/* </form> */}
-              </Form>
-            </Formik>
+                </form>
+              {/* </Form> */}
+            {/* </Formik> */}
           </div>
         </div>
       </div>

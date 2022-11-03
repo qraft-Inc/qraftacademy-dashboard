@@ -4,57 +4,33 @@ import db from "../../../data/db";
 import User from "../../../model/User";
 import bcrypt from "bcryptjs";
 
-export default NextAuth({
+const authOptions = {
   session: {
     strategy: "jwt",
   },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user?._id) token._id = user._id;
-      if (user?.admin.isAdmin) token.admin.isAdmin = user.admin.isAdmin;
-      if (user?.admin.fullname) token.admin.fullname = user.admin.fullname;
-      if (user?.admin.image) token.admin.image = user.admin.image;
-
-      return token;
-    },
-    async session({ session, token }) {
-      if (token?._id) session._id = token.user._id;
-      if (token?.admin.isAdmin) session.admin.isAdmin = token.admin.isAdmin;
-      if (token?.admin.fullname) session.admin.fullname = token.admin.fullname;
-      if (token?.admin.image) token.admin.image = token.admin.image;
-
-      return session;
-    },
-  },                                                                                                                                                                                                             
   providers: [
     CredentialsProvider({
-      async authorize(credentials) {
-        await db.connect();
-        // const email = credentials.email;
-        // const password = credentials.password;
+      type: "credentials",
 
-        const email = credentials.user.email;
-        const password = credentials.user.password;
-        const user = await User.findOne({ email:admin.email });
-        // console.log(user)
+      async authorize(credentials) {
+        const email = credentials.email;
+        const password = credentials.password;
+
+        // if (email !== "admin@gmail.com" || password !== "1") {
+        //   throw new Error("invalid credentials");
+        // }
+        // return {name: "admin", email: "admin@gmail.com" };
+
+        const user = await User.findOne({ email: user.admin.email });
         if (!user) {
           throw new Error("User does not exist");
         }
-      
-        if (user && bcrypt.compareSync(password, user.password)) {
-          return {
-            _id: user._id,
-            email: user.email,
-            fullname: user.fullname,
-            isAdmin: user.isAdmin,
-            image: user.image,
-          };
+        if (email !== "admin@gmail.com" || password !== "1") {
+          throw new Error("invalid credentials");
         }
-        throw new Error("Invalid credentials");
+        return { name: "admin", email: "admin@gmail.com" };
       },
     }),
   ],
-  secret: "secret",
-});
-
-
+};
+export default NextAuth(authOptions);
