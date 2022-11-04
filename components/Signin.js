@@ -31,11 +31,11 @@ export default function Signin() {
   //   }),
   // });
 
-  useEffect(() => {
-    if (session?.user) {
-      router.push("/dashboard");
-    }
-  }, [router, session]);
+  // useEffect(() => {
+  //   if (session?.user) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [router, session]);
 
   console.log({session})
 
