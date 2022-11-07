@@ -8,82 +8,90 @@ import Link from "next/link";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { ConnectionStates } from "mongoose";
 
 export default function Signin() {
   const router = useRouter();
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
 
   // initial form value
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  // const initialValues = {
+  //   email: "",
+  //   password: "",
+  // };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   // form validation with yup Lib
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email format").required("Required"),
-    password: Yup.string().required("Required"),
-  });
+  // const validationSchema = Yup.object({
+  //   email: Yup.string().email("Invalid email format").required("Required"),
+  //   password: Yup.string().required("Required"),
+  // });
 
   // useEffect(() => {
   //   if (session?.user) {
   //     router.push("/dashboard");
   //   }
   // }, [router, session]);
+  console.log({ session });
 
-  const onSubmit = async (values, onSubmitProps) => {
-    //   const result = await signIn("credentials", {
-    //     redirect: false,
-    //     values,
-    //   });
+  // const onSubmit = async (values, onSubmitProps) => {
+  //   const result = await signIn("credentials", {
+  //     redirect: false,
+  //     values,
+  //   });
+  //   console.log({result});
 
-    // onSubmitProps.resetForm();
-    //   if (result?.error) {
-    //     setError(result.error);
-    //     setTimeout(() => {
-    //       setError("");
-    //     }, 5000);
-    //   }
-    try {
-      const { data } = await axios.post("/api/user/login", values);
-      alert("Success Login");
-
-      onSubmitProps.resetForm();
-    } catch (err) {
-      setError(err.response.data ? err.response.data.message : err.message);
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-    }
-  };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  // const result = await signIn("credentials", {
-  //   redirect: false,
-  //   email,
-  //   password,
-  // });
-  // if (result?.error) {
-  //   setError(result.error);
-  //   setTimeout(() => {
-  //     setError("");
-  //   }, 5000);
-  // }
-  //   try {
-  //     const { data } = await axios.post("/api/user/login", { email, password });
-  //     alert("Success Login");
-  //   } catch (err) {
-  //     // alert(err.response.data ? err.response.data.message : err.message);
-  //     setError(err.response.data ? err.response.data.message : err.message);
+  //   onSubmitProps.resetForm();
+  //   if (result?.error) {
+  //     setError(result.error);
   //     setTimeout(() => {
   //       setError("");
   //     }, 5000);
   //   }
+
+  // try {
+  //   const { data } = await axios.post("/api/user/login", values);
+  //   alert("Success Login");
+
+  //   onSubmitProps.resetForm();
+  // } catch (err) {
+  //   setError(err.response.data ? err.response.data.message : err.message);
+  //   setTimeout(() => {
+  //     setError("");
+  //   }, 5000);
+  // }
   // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+    console.log(result)
+
+    if (result?.error) {
+      setError(result.error);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  
+
+    // try {
+    //   const { data } = await axios.post("/api/user/login", { email, password });
+    //   alert("Success Login");
+    // } catch (err) {
+    //   // alert(err.response.data ? err.response.data.message : err.message);
+    //   setError(err.response.data ? err.response.data.message : err.message);
+    //   setTimeout(() => {
+    //     setError("");
+    //   }, 5000);
+    // }
+  };
 
   return (
     <div className="flex flex-col h-screen justify-between">
@@ -109,41 +117,42 @@ export default function Signin() {
               Sign in to your account
             </h2>
 
-            <Formik
+            {/* <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
               className="w-full"
-            >
-              <Form>
-                {/* <form onSubmit={handleSubmit} className="space-y-2"> */}
-                <div className="rounded-md shadow-sm space-y-2">
-                  <div>
-                    <Field
+            > */}
+            {/* <Form> */}
+            <form onSubmit={handleSubmit} className="space-y-2">
+              <div className="rounded-md shadow-sm space-y-2">
+                <div>
+                  {/* <Field
                       name="email"
                       type="email"
                       aria-label="email"
                       autoComplete="email"
                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                       placeholder="Email address"
+                      
                     />
                     <div className="font-bold text-red-600 text-sm">
                       <ErrorMessage name="email" />
-                    </div>
+                    </div> */}
 
-                    {/* <input
-                    name="admin.email"
+                  <input
+                    name="email"
                     type="email"
                     aria-label="email"
                     autoComplete="email"
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Email address"
                     onChange={(e) => setEmail(e.target.value)}
-                  /> */}
-                  </div>
+                  />
+                </div>
 
-                  <div>
-                    <Field
+                <div>
+                  {/* <Field
                       name="password"
                       type="password"
                       aria-label="password"
@@ -152,37 +161,37 @@ export default function Signin() {
                     />
                     <div className="font-bold text-red-600 text-sm">
                       <ErrorMessage name="password" />
-                    </div>
+                    </div> */}
 
-                    {/* <input
-                    name="admin.password"
+                  <input
+                    name="password"
                     type="password"
                     aria-label="password"
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)}
-                  /> */}
-                  </div>
+                  />
                 </div>
-                <div className="flex flex-col">
-                  <button
-                    type="submit"
-                    className="rounded-lg bg-[#4092CF] text-base px-3 py-2 hover:bg-blue-400 transition duration-300"
-                  >
-                    Login
-                  </button>
-                  <Link href="/forgot-password" passHref>
-                    <a className="text-blue-500 text-sm text-right">
-                      Forgot Password ?
-                    </a>
-                  </Link>
-                  {error && (
-                    <span className="text-red-500 text-center">{error}</span>
-                  )}
-                </div>
-                {/* </form> */}
-              </Form>
-            </Formik>
+              </div>
+              <div className="flex flex-col">
+                <button
+                  type="submit"
+                  className="rounded-lg bg-[#4092CF] text-base px-3 py-2 hover:bg-blue-400 transition duration-300"
+                >
+                  Login
+                </button>
+                <Link href="/forgot-password" passHref>
+                  <a className="text-blue-500 text-sm text-right">
+                    Forgot Password ?
+                  </a>
+                </Link>
+                {error && (
+                  <span className="text-red-500 text-center">{error}</span>
+                )}
+              </div>
+            </form>
+            {/* </Form> */}
+            {/* </Formik> */}
           </div>
         </div>
       </div>

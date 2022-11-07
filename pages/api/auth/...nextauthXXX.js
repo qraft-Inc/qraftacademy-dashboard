@@ -25,7 +25,7 @@ const authOptions = {
 
       return session;
     },
-  }, 
+  },
   providers: [
     CredentialsProvider({
       type: "credentials",
@@ -53,11 +53,11 @@ const authOptions = {
             isAdmin: user.admin.isAdmin,
             image: user.admin.image,
           };
-      
         }
         throw new Error("Invalid credentials");
       },
     }),
   ],
+  secret: process.env.JWT_SECRET,
 };
 export default NextAuth(authOptions);
