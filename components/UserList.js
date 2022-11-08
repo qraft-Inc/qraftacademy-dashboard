@@ -5,7 +5,7 @@ import { FaEdit } from "react-icons/fa";
 import { UserContext } from "../contexts/UserContext";
 import EditModal from "./modals/EditModal";
 import useShow from "./hooks/useShow";
-import ViewModal from "./modals/ViewModal";
+import ViewAdminModal from "./modals/ViewModal";
 import PasswordModal from "./modals/PasswordModal";
 import Image from "next/image";
 import profile from "../public/images/profile.png";
@@ -54,13 +54,13 @@ export default function UserList({ user }) {
 
         <ul className="text-sm font-medium text-gray-900 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
           <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-            Name : <span className="font-bold">{user.fullname}</span>
+            Name : <span className="font-bold">{user.admin.fullname}</span>
           </li>
           <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-            Email : <span className="font-bold">{user.email}</span>
+            Email : <span className="font-bold">{user.admin.email}</span>
           </li>
           <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-            Mobile : <span className="font-bold">{user.telephone}</span>
+            Mobile : <span className="font-bold">{user.admin.telephone}</span>
           </li>
         </ul>
 
@@ -74,7 +74,7 @@ export default function UserList({ user }) {
               <RiLockPasswordFill size="1.3rem" />
             </button>
           </li>
-          <li className="">
+          {/* <li className="">
             <button
               onClick={() => {
                 setViewModal(true);
@@ -82,7 +82,7 @@ export default function UserList({ user }) {
             >
               <AiFillEye size="1.3rem" className="text-[#f0ad4e]" />
             </button>
-          </li>
+          </li> */}
           <li className="">
             <button type="button" onClick={() => setEditModal(true)}>
               <FaEdit size="1.3rem" className="text-blue-400 " />
@@ -103,7 +103,7 @@ export default function UserList({ user }) {
         <EditModal user={user} setEditModal={setEditModal} />
       ) : null}
       {showViewModal ? (
-        <ViewModal user={user} setViewModal={setViewModal} />
+        <ViewAdminModal user={user} setViewModal={setViewModal} />
       ) : null}
     </>
   );

@@ -9,21 +9,29 @@ export default NextAuth({
     CredentialsProvider({
       name: "Credentials",
       async authorize(credentials, req) {
-        const { email, password } = credentials;
+        // const { email, password } = credentials;
 
-        const user = await User.findOne({ user: email });
+        const email = credentials.email;
+        const password = credentials.password;
 
+        console.log({ email }, { password })
+
+        const user = await User.findOne({ email });
+        // const user = await User.findOne({ user: email });
+        console.log({user})
+   
         if (!user) {
           throw new Error("User does not exist");
         }
         if (user && bcrypt.compareSync(password, user.admin.password)) {
-          return {
-            _id: user._id,
-            email: user.admin.email,
-            fullname: user.admin.fullname,
-            isAdmin: user.admin.isAdmin,
-            image: user.admin.image,
-          };
+          // return {
+          //   _id: user._id,
+          //   email: user.admin.email,
+          //   fullname: user.admin.fullname,
+          //   isAdmin: user.admin.isAdmin,
+          //   image: user.admin.image,
+          // };
+          return user
         }
         throw new Error("Invalid credentials");
       },

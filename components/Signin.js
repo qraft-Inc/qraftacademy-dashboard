@@ -7,8 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import { ConnectionStates } from "mongoose";
+
 
 export default function Signin() {
   const router = useRouter();
@@ -19,8 +18,7 @@ export default function Signin() {
     email: "",
     password: "",
   };
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+
   const [error, setError] = useState(null);
 
   // form validation with yup Lib
@@ -29,75 +27,29 @@ export default function Signin() {
     password: Yup.string().required("Required"),
   });
 
-    
-  // const validationSchema = Yup.object({
-  //   user: Yup.object({
-  //     email: Yup.string().email("Invalid email format").required("Required"),
-  //     fullname: Yup.string().required("Required"),
-  //   }),
 
-  // useEffect(() => {
-  //   if (session?.user) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [router, session]);
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/dashboard");
+    }
+  }, [router, session]);
 
   const onSubmit = async (values, onSubmitProps) => {
-    console.log(values)
     const result = await signIn("credentials", {
       redirect: false,
-      values,
+      email:values.email,
+      password:values.password,
     });
-
-    console.log({ result });
 
     // onSubmitProps.resetForm();
     if (result?.error) {
       setError(result.error);
-      setTimeout(() => {
-        setError("");
-      }, 5000);
+      // setTimeout(() => {
+      //   setError("");
+      // }, 5000);
     }
 
-    // try {
-    //   const { data } = await axios.post("/api/user/login", values);
-    //   alert("Success Login");
 
-    //   onSubmitProps.resetForm();
-    // } catch (err) {
-    //   setError(err.response.data ? err.response.data.message : err.message);
-    //   setTimeout(() => {
-    //     setError("");
-    //   }, 5000);
-    // }
-    // };
-
-    // const handleSubmit = async (e) => {
-    //   e.preventDefault();
-    //   const result = await signIn("credentials", {
-    //     redirect: false,
-    //     email,
-    //     password,
-    //   });
-    //   console.log(result)
-
-    //   if (result?.error) {
-    //     setError(result.error);
-    //     setTimeout(() => {
-    //       setError("");
-    //     }, 5000);
-    //   }
-
-    // try {
-    //   const { data } = await axios.post("/api/user/login", { email, password });
-    //   alert("Success Login");
-    // } catch (err) {
-    //   // alert(err.response.data ? err.response.data.message : err.message);
-    //   setError(err.response.data ? err.response.data.message : err.message);
-    //   setTimeout(() => {
-    //     setError("");
-    //   }, 5000);
-    // }
   };
 
   return (
