@@ -18,7 +18,7 @@ const authOptions = {
       return token;
     },
     async session({ session, token }) {
-      // if (token?._id) session._id = token.user._id;
+      if (token?._id) session._id = token.user._id;
       if (token?.isAdmin) session.isAdmin = token.isAdmin;
       if (token?.fullname) session.fullname = token.fullname;
       if (token?.image) token.image = token.image;

@@ -7,25 +7,12 @@ import bcrypt from "bcryptjs";
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
-      // credentials: {
-      //   username: { label: "Username", type: "text", placeholder: "jsmith" },
-      //   password: { label: "Password", type: "password" }
-      // },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
         const { email, password } = credentials;
 
-        console.log({ email, password });
-
         const user = await User.findOne({ user: email });
-        console.log(user);
+
         if (!user) {
           throw new Error("User does not exist");
         }
@@ -42,4 +29,22 @@ export default NextAuth({
       },
     }),
   ],
+
+  callbacks: {
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (user?._id) token.id = user._id;
+      if (user?.isAdmin) token.isAdmin = user.isAdmin;
+      if (user?.fullname) token.fullname = user.fullname;
+      if (user?.image) token.image = user.image;
+      return token;
+    },
+    async session({ session, user, token }) {
+      if (token?.id) session.user.id = token.id;
+      if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
+      if (token?.fullname) session.user.fullname = token.fullname;
+      if (token?.image) session.user.image = token.image;
+
+      return session;
+    },
+  },
 });
