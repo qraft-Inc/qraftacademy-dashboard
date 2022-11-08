@@ -1,6 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
-import db from "../../../data/db";
 import User from "../../../model/User";
 import bcrypt from "bcryptjs";
 
@@ -14,24 +13,23 @@ export default NextAuth({
         const email = credentials.email;
         const password = credentials.password;
 
-        console.log({ email }, { password })
+        // const user = await User.findOne({ email });
+        const user = await User.findOne({ "user.email": credentials.email });
+       
 
-        const user = await User.findOne({ email });
-        // const user = await User.findOne({ user: email });
-        console.log({user})
-   
         if (!user) {
           throw new Error("User does not exist");
         }
-        if (user && bcrypt.compareSync(password, user.admin.password)) {
+        // if (user && bcrypt.compareSync(password, user.admin.password)) {
+        if (user && bcrypt.compareSync(password, user.user.password)) {
           // return {
           //   _id: user._id,
-          //   email: user.admin.email,
-          //   fullname: user.admin.fullname,
-          //   isAdmin: user.admin.isAdmin,
-          //   image: user.admin.image,
+          //   email: user.user.email,
+          //   fullname: user.user.fullname,
+          //   isAdmin: user.user.isAdmin,
+          //   image: user.user.image,
           // };
-          return user
+          return user;
         }
         throw new Error("Invalid credentials");
       },
@@ -40,14 +38,16 @@ export default NextAuth({
 
   callbacks: {
     async jwt({ token, user, account, profile, isNewUser }) {
-      if (user?._id) token.id = user._id;
-      if (user?.isAdmin) token.isAdmin = user.isAdmin;
-      if (user?.fullname) token.fullname = user.fullname;
-      if (user?.image) token.image = user.image;
+  
+      if (user?._id) token._id = user._id;
+      if (user?.user.isAdmin) token.isAdmin = user.user.isAdmin;
+      if (user?.user.fullname) token.fullname = user.user.fullname;
+      if (user?.user.image) token.image = user.user.image;
       return token;
     },
     async session({ session, user, token }) {
-      if (token?.id) session.user.id = token.id;
+      console.log({session,token})
+      if (token?._id) session.user._id = token._id;
       if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
       if (token?.fullname) session.user.fullname = token.fullname;
       if (token?.image) session.user.image = token.image;

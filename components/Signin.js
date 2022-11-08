@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-
 export default function Signin() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -27,7 +26,6 @@ export default function Signin() {
     password: Yup.string().required("Required"),
   });
 
-
   useEffect(() => {
     if (session?.user) {
       router.push("/dashboard");
@@ -37,8 +35,8 @@ export default function Signin() {
   const onSubmit = async (values, onSubmitProps) => {
     const result = await signIn("credentials", {
       redirect: false,
-      email:values.email,
-      password:values.password,
+      email: values.email,
+      password: values.password,
     });
 
     // onSubmitProps.resetForm();
@@ -48,8 +46,6 @@ export default function Signin() {
       //   setError("");
       // }, 5000);
     }
-
-
   };
 
   return (

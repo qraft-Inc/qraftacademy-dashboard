@@ -7,6 +7,7 @@ export default function PasswordModal({ user, setPasswordModal }) {
   const { updatePassword } = useContext(UserContext);
   const id = user._id;
 
+
   // initial form value
   const initialValues = {
     password: user.password,

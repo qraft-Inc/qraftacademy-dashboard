@@ -30,7 +30,7 @@ export default function UserList({ user }) {
           <div className="w-20 md:w-20">
             <Image
               alt="profile pic"
-              src={user.image}
+              src={user.user.image}
               className="col-auto rounded-full"
               width={3077}
               height={3448}
@@ -54,13 +54,13 @@ export default function UserList({ user }) {
 
         <ul className="text-sm font-medium text-gray-900 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
           <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
-            Name : <span className="font-bold">{user.admin.fullname}</span>
+            Name : <span className="font-bold">{user.user.fullname}</span>
           </li>
           <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-            Email : <span className="font-bold">{user.admin.email}</span>
+            Email : <span className="font-bold">{user.user.email}</span>
           </li>
           <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-            Mobile : <span className="font-bold">{user.admin.telephone}</span>
+            Mobile : <span className="font-bold">{user.user.telephone}</span>
           </li>
         </ul>
 
