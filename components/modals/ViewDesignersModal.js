@@ -51,148 +51,124 @@ export default function ViewModal({ user, setViewModal }) {
                 </span>
                 <table className="table-auto border-collapse border-gray-400">
                   <tbody>
-                    <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">Email</th>
+                    <tr className=" bg-white">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
+                        Email
+                      </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.email}
+                        {user.user.email}
                       </td>
                     </tr>
-                   <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className="bg-[#eee8e4]">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         Full Name
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.fullname}
+                        {user.user.fullname}
                       </td>
                     </tr>
-                   <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className=" bg-white">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         Phone Number
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.telephone}
+                        {user.designers.telephone}
                       </td>
                     </tr>
-                   <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
-                        Gender
-                      </th>
-                      <td className="p-1.5 border border-gray-400">{user.gender}</td>
-                    </tr>
-                   <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
+
+                    <tr className=" bg-[#eee8e4]">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         Link your CV
                       </th>
-                      <td className="p-1.5 border border-gray-400">{user.cv}</td>
+                      <td className="p-1.5 border border-gray-400">
+                        {user.designers.cv}
+                      </td>
                     </tr>
+
                     <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
-                      Link to your LinkedIn
-                      </th>
-                      <td className="p-1.5 border border-gray-400">{user.linkedin}</td>
-                    </tr>
-                    <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
-                      Link to your Github
-                      </th>
-                      <td className="p-1.5 border border-gray-400">{user.github}</td>
-                    </tr>
-                   <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         Link to your Cover Letter
                       </th>
-                      <td className="p-1.5 border border-gray-400">{user.letter}</td>
+                      <td className="p-1.5 border border-gray-400">
+                        {user.designers.letter}
+                      </td>
                     </tr>
-                   <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className=" bg-[#eee8e4]">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         What Program are you enrolling for
                       </th>
-                      <td className="p-1.5 border border-gray-400">{user.program}</td>
+                      <td className="p-1.5 border border-gray-400">
+                        {user.designers.program}
+                      </td>
                     </tr>
-                    <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
-                      What is your prefered programming stack 
-                      </th>
-                      <td className="p-1.5 border border-gray-400">{user.stack}</td>
-                    </tr>
-                    <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
-                      What Course are you enrolling for
-                      </th>
-                      <td className="p-1.5 border border-gray-400">{user.course}</td>
-                    </tr>
-                    <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
-                      What is your ideal role 
-                      </th>
-                      <td className="p-1.5 border border-gray-400">{user.position}</td>
-                    </tr>
-                   <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className=" bg-white">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         How did you learn about Qraft Academy. What inspired
                         /motivated you to apply for this program?
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.textarea1}
+                      {user.designers.textarea1}
                       </td>
                     </tr>
-                   <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className=" bg-[#eee8e4]">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         What are your expectations from this program?
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.textarea2}
+                        {user.designers.textarea2}
                       </td>
                     </tr>
-                   <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className=" bg-white">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         What are you working on currently? and How do you keep
                         your designing skills current?
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.textarea3}
+                        {user.designers.textarea3}
                       </td>
                     </tr>
-                   <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className="bg-[#eee8e4]">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         What are your favorite and least favorite design tools,
                         and why?
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.textarea4}
+                        {user.designers.textarea4}
                       </td>
                     </tr>
-                   <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className=" bg-white">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         What is your most proud of achievement so far?
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.textarea5}
+                        {user.designers.textarea5}
                       </td>
                     </tr>
-                   <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className="bg-[#eee8e4]">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
+                        What type of role best suits you?
+                      </th>
+                      <td className="p-1.5 border border-gray-400">
+                        {user.designers.role}
+                      </td>
+                    </tr>
+                    <tr className=" bg-white">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         When was the last time you stood up for something that
                         you believed in? What was your motivation? How did it
                         turn out?
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.textarea6}
+                        {user.designers.textarea6}
                       </td>
                     </tr>
-                   <tr className="bg-white">
-                      <th className="p-1.5 border border-gray-400">
+                    <tr className="bg-[#eee8e4]">
+                      <th className="p-1.5 border border-gray-400 w-6/12">
                         Professionally, what’s your goal?
                       </th>
                       <td className="p-1.5 border border-gray-400">
-                        {user.textarea7}
+                        {user.designers.textarea7}
                       </td>
-                    </tr>
-                   <tr className=" bg-[#eee8e4]">
-                      <th className="p-1.5 border border-gray-400">
-                        What type of role best suits you
-                      </th>
-                      <td className="p-1.5 border border-gray-400">{user.role}</td>
                     </tr>
                   </tbody>
                 </table>

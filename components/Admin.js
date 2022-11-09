@@ -1,9 +1,12 @@
-import React, { useContext, Fragment, useState } from "react";
+import React, { useContext, Fragment, useState, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import useShow from "./hooks/useShow";
 import { GrAddCircle } from "react-icons/gr";
 import { ImUserTie } from "react-icons/im";
-import UserList from "./UserList";
+import AdminList from "./AdminList";
+import MarketingList from "./MarketingList";
+import DesignerList from "./DesignerList";
+import DeveloperList from "./DeveloperList";
 import { signOut } from "next-auth/react";
 import AddModal from "./modals/AddModal";
 import Footer from "./Footer";
@@ -15,6 +18,11 @@ export default function Admin() {
   const [searchName, setSearchName] = useState({ text: "" });
   const { userData, setUserData } = useContext(UserContext);
   const { searchedData, users, loading } = userData;
+  const [courseList, setCourseList] = useState("admin");
+  const [admin, setAdmin] = useState(false);
+  const [marketing, setMarketing] = useState(false);
+  const [designers, setDesigners] = useState(false);
+  const [developers, setDevelopers] = useState(false);
 
   //custome hook
   const [showAddModal, setAddModal] = useShow();
@@ -28,6 +36,13 @@ export default function Admin() {
     });
     setUserData({ ...userData, searchedData: result });
   };
+
+  useEffect(() => {
+    courseList === "admin" ? setAdmin(true) : setAdmin(false);
+    courseList === "marketing" ? setMarketing(true) : setMarketing(false);
+    courseList === "designers" ? setDesigners(true) : setDesigners(false);
+    courseList === "developers" ? setDevelopers(true) : setDevelopers(false);
+  }, [courseList]);
 
   return (
     <div className="flex flex-col h-screen justify-between bg-[#eee8e4]">
@@ -62,14 +77,90 @@ export default function Admin() {
         </nav>
 
         <section className="flex flex-col p-2 md:p-0 mt-3 mb-3 container mx-auto">
-          <button
-            type="button"
-            className="flex items-center gap-0.5 max-w-max inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out"
-            onClick={() => setAddModal(true)}
-          >
-            <GrAddCircle size="1rem" />
-            Create
-          </button>
+          <div className="flex gap-36">
+            <button
+              type="button"
+              className="flex items-center gap-0.5 max-w-max inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out"
+              onClick={() => setAddModal(true)}
+            >
+              <GrAddCircle size="1rem" />
+              Create
+            </button>
+            <div className="flex justify-center">
+              <div className="dropend relative">
+                <button
+                  className="dropdown-toggle px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded
+          shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg active:text-white
+          transition duration-150 ease-in-out flex items-center whitespace-nowrap"
+                  type="button"
+                  id="dropdownMenuButton1e"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {courseList}
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fas"
+                    data-icon="caret-right"
+                    className="w-1.5 ml-2"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 192 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
+                    ></path>
+                  </svg>
+                </button>
+                <ul
+                  className="dropdown-menu min-w-max absolute hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg
+          shadow-lg mt-1 hidden m-0 bg-clip-padding border-none"
+                  aria-labelledby="dropdownMenuButton1e"
+                >
+                  <li
+                    className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700
+              hover:bg-gray-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCourseList("admin");
+                    }}
+                  >
+                    Admin
+                  </li>
+                  <li
+                    className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700
+              hover:bg-gray-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCourseList("developers");
+                    }}
+                  >
+                    Developers
+                  </li>
+                  <li
+                    className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCourseList("designers");
+                    }}
+                  >
+                    Designers
+                  </li>
+                  <li
+                    className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCourseList("marketing");
+                    }}
+                  >
+                    Marketing
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
           {/* search section */}
           <div className="sm:w-96">
@@ -83,7 +174,6 @@ export default function Admin() {
                 value={searchName.text}
                 onChange={handleSearch}
               />
-
             </div>
           </div>
         </section>
@@ -97,7 +187,22 @@ export default function Admin() {
               {searchedData.length > 0 &&
                 searchedData.map((user) => (
                   <Fragment key={user._id}>
-                    <UserList user={user} />
+                    {/* <pre>{JSON.stringify(user.marketing)}</pre> */}
+                    {user.user.isAdmin === true && admin ? (
+                      <AdminList user={user} />
+                    ) : null}
+
+                    {user.marketing && marketing ? (
+                      <MarketingList user={user} />
+                    ) : null}
+
+                    {user.designers && designers ? (
+                      <DesignerList user={user} />
+                    ) : null}
+
+                    {user.developers && developers ? (
+                      <DeveloperList user={user} />
+                    ) : null}
                   </Fragment>
                 ))}
             </div>
@@ -106,7 +211,6 @@ export default function Admin() {
         {showAddModal ? (
           <AddModal setAddModal={setAddModal} setUserData={setUserData} />
         ) : null}
-
       </div>
       <Footer />
     </div>

@@ -15,12 +15,11 @@ export default NextAuth({
 
         // const user = await User.findOne({ email });
         const user = await User.findOne({ "user.email": credentials.email });
-       
 
         if (!user) {
           throw new Error("User does not exist");
         }
-        // if (user && bcrypt.compareSync(password, user.admin.password)) {
+
         if (user && bcrypt.compareSync(password, user.user.password)) {
           // return {
           //   _id: user._id,
@@ -38,7 +37,6 @@ export default NextAuth({
 
   callbacks: {
     async jwt({ token, user, account, profile, isNewUser }) {
-  
       if (user?._id) token._id = user._id;
       if (user?.user.isAdmin) token.isAdmin = user.user.isAdmin;
       if (user?.user.fullname) token.fullname = user.user.fullname;
@@ -46,7 +44,6 @@ export default NextAuth({
       return token;
     },
     async session({ session, user, token }) {
-      console.log({session,token})
       if (token?._id) session.user._id = token._id;
       if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
       if (token?.fullname) session.user.fullname = token.fullname;
