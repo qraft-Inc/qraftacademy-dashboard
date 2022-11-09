@@ -32,7 +32,7 @@ export default function Admin() {
     setSearchName({ ...searchName, text: e.target.value });
 
     const result = users.filter((user) => {
-      return user.fullname.toLowerCase().includes(e.target.value.toLowerCase());
+      return user.user.fullname.toLowerCase().includes(e.target.value.toLowerCase());
     });
     setUserData({ ...userData, searchedData: result });
   };
