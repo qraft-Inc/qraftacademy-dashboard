@@ -13,22 +13,40 @@ const UserContextProvider = (props) => {
   });
 
   // show all users
-  const fetchUserData = async () => {
-    try {
-      setUserData({ ...userData, loading: true });
-      const response = await axios.get("/api/user");
-      setUserData({
-        ...userData,
-        users: response.data,
-        searchedData: response.data,
-        loading: false,
-      });
-    } catch (err) {
-      setUserData({ ...userData, loading: false, errorMessage: err.message });
-    }
-  };
+  // const fetchUserData = async () => {
+  //   try {
+  //     setUserData({ ...userData, loading: true });
+  //     const response = await axios.get("/api/user");
+  //     setUserData({
+  //       ...userData,
+  //       users: response.data,
+  //       searchedData: response.data,
+  //       loading: false,
+  //     });
+  //   } catch (err) {
+  //     setUserData({ ...userData, loading: false, errorMessage: err.message });
+  //   }
+  // };
 
-  useEffect(async () => {
+  // useEffect(async () => {
+  //   fetchUserData();
+  // }, []);
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        setUserData({ ...userData, loading: true });
+        const response = await axios.get("/api/user");
+        setUserData({
+          ...userData,
+          users: response.data,
+          searchedData: response.data,
+          loading: false,
+        });
+      } catch (err) {
+        setUserData({ ...userData, loading: false, errorMessage: err.message });
+      }
+    }
     fetchUserData();
   }, []);
 

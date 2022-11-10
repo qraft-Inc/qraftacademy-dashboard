@@ -29,11 +29,13 @@ export default async function handler(req, res) {
           {
             email: req.body.email,
             fullname: req.body.fullname,
-            // telephone: req.body.telephone,
+            telephone: req.body.telephone,
             image: req.body.image,
           },
           { new: true }
         );
+        console.log("fullname: ",req.body.fullname)
+        // console.log(user)
         await db.disconnect();
         return res.status(200).json(user);
       } catch (err) {

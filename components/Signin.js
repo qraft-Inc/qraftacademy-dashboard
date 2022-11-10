@@ -51,7 +51,7 @@ export default function Signin() {
   return (
     <div className="flex flex-col h-screen justify-between">
       <div className="flex justify-start p-4 ">
-        <Link href="https://qraft-academy.netlify.app">
+        <Link href="https://qraft-academy.netlify.app" passHref legacyBehavior>
           <a>
             <Image
               alt="profile pic"
@@ -60,7 +60,7 @@ export default function Signin() {
               width={90}
               height={62}
               placeholder="blur"
-              blurDataURL
+              // blurDataURL
             />
           </a>
         </Link>
@@ -134,7 +134,7 @@ export default function Signin() {
                   >
                     Login
                   </button>
-                  <Link href="/forgot-password" passHref>
+                  <Link href="/forgot-password" passHref legacyBehavior>
                     <a className="text-blue-500 text-sm text-right">
                       Forgot Password ?
                     </a>

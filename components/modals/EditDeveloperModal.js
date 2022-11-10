@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { Formik, Field, Form } from "formik";
 
-export default function EditModal({ user, setEditModal }) {
+export default function EditDeveloperModal({ user, setEditModal }) {
   const { updateUser } = useContext(UserContext);
   const id = user._id;
 

@@ -57,7 +57,7 @@ export default function Admin() {
                 width={90}
                 height={62}
                 placeholder="blur"
-                blurDataURL
+                // blurDataURL
               />
             </div>
             <div className="flex items-center gap-1 text-xl font-semibold">

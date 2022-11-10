@@ -3,7 +3,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import Image from "next/image";
 import profile from "../../public/images/profile.png";
 
-export default function ViewModal({ user, setViewModal }) {
+export default function ViewMarketingModal({ user, setViewModal }) {
   return (
     <>
       <div
@@ -36,7 +36,7 @@ export default function ViewModal({ user, setViewModal }) {
                       className="col-auto rounded-full w-32"
                       width="100"
                       height="100"
-                      blurDataURL
+                      // blurDataURL
                     />
                   ) : (
                     <Image
@@ -45,7 +45,7 @@ export default function ViewModal({ user, setViewModal }) {
                       className="col-auto rounded-full w-32"
                       width="100"
                       height="100"
-                      blurDataURL
+                      // blurDataURL
                     />
                   )}
                 </span>

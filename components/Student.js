@@ -116,7 +116,7 @@ export default function Student() {
                 width={90}
                 height={62}
                 placeholder="blur"
-                blurDataURL
+                // blurDataURL
               />
             </div>
 
@@ -145,7 +145,7 @@ export default function Student() {
                           width={3077}
                           height={3448}
                           placeholder="blur"
-                          blurDataURL
+                          // blurDataURL
                         />
                       </div>
                     ) : (
@@ -157,7 +157,7 @@ export default function Student() {
                           width={1010}
                           height={1010}
                           placeholder="blur"
-                          blurDataURL
+                          // blurDataURL
                         />
                       </div>
                     )}
@@ -212,7 +212,7 @@ export default function Student() {
                     width={card.width}
                     height={card.height}
                     placeholder="blur"
-                    blurDataURL
+                    // blurDataURL
                   />
                 </a>
                 <div className="p-2">

@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { Formik, Field, Form } from "formik";
 
-export default function EditModal({ user, setEditModal }) {
+export default function EditAdminModal({ user, setEditModal }) {
   const { updateUser } = useContext(UserContext);
   const id = user._id;
+  // console.log("id: ",id)
+
 
   // initial form value
   const initialValues = {
@@ -16,7 +18,7 @@ export default function EditModal({ user, setEditModal }) {
   const onSubmit = async (values) => {
     updateUser(id, values);
     setEditModal(false);
-    console.log(values)
+    // console.log(values)
   };
 
   return (

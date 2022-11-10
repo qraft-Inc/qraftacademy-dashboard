@@ -35,7 +35,7 @@ export default function DesignerList({ user }) {
               width={3077}
               height={3448}
               placeholder="blur"
-              blurDataURL
+              // blurDataURL
             />
           </div>
         ) : (
@@ -47,7 +47,7 @@ export default function DesignerList({ user }) {
               width={1010}
               height={1010}
               placeholder="blur"
-              blurDataURL
+              // blurDataURL
             />
           </div>
         )}
