@@ -3,7 +3,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import { UserContext } from "../contexts/UserContext";
-import EditModal from "./modals/EditModal";
+import EditAdminModal from "./modals/EditAdminModal";
 import useShow from "./hooks/useShow";
 import PasswordModal from "./modals/PasswordModal";
 import Image from "next/image";
@@ -82,7 +82,7 @@ export default function AdminList({ user }) {
         <PasswordModal user={user} setPasswordModal={setPasswordModal} />
       ) : null}
       {showEditModal ? (
-        <EditModal user={user} setEditModal={setEditModal} />
+        <EditAdminModal user={user} setEditModal={setEditModal} />
       ) : null}
     </>
   );

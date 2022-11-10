@@ -10,13 +10,13 @@ export default function PasswordModal({ user, setPasswordModal }) {
 
   // initial form value
   const initialValues = {
-    password: user.password,
+    password: user.user.password,
   };
 
   const onSubmit = async (values) => {
     updatePassword(id, values);
     setPasswordModal(false);
-    console.log(values)
+
   };
 
   return (

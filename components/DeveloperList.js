@@ -3,9 +3,9 @@ import { AiFillDelete, AiFillEye } from "react-icons/ai";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import { UserContext } from "../contexts/UserContext";
-import EditModal from "./modals/EditModal";
+import EditDeveloperModal from "./modals/EditDeveloperModal";
 import useShow from "./hooks/useShow";
-import ViewAdminModal from "./modals/ViewMarketingModal";
+import ViewDeveloperModal from "./modals/ViewDeveloperModal";
 import PasswordModal from "./modals/PasswordModal";
 import Image from "next/image";
 import profile from "../public/images/profile.png";
@@ -60,7 +60,7 @@ export default function DeveloperList({ user }) {
             Email : <span className="font-bold">{user.user.email}</span>
           </li>
           <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
-            Mobile : <span className="font-bold">{user.user.telephone}</span>
+            Mobile : <span className="font-bold">{user.developers.telephone}</span>
           </li>
         </ul>
 
@@ -100,10 +100,10 @@ export default function DeveloperList({ user }) {
         <PasswordModal user={user} setPasswordModal={setPasswordModal} />
       ) : null}
       {showEditModal ? (
-        <EditModal user={user} setEditModal={setEditModal} />
+        <EditDeveloperModal user={user} setEditModal={setEditModal} />
       ) : null}
       {showViewModal ? (
-        <ViewAdminModal user={user} setViewModal={setViewModal} />
+        <ViewDeveloperModal user={user} setViewModal={setViewModal} />
       ) : null}
     </>
   );

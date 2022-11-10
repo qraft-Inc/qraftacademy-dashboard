@@ -9,15 +9,20 @@ export default async function handler(req, res) {
   await db.connect();
 
   if (req.method === "PUT") {
+    console.log("password: ",req.body.password)
     try {
       const salt = await bcrypt.genSalt(10);
-      const newPassword = await bcrypt.hash(req.body.password, salt);
+      const hashPassword = await bcrypt.hash(req.body.password, salt);
+      
 
+      console.log("Hashed password: ",hashPassword)
       const password = await User.findByIdAndUpdate(
         { _id: id },
-        { password: newPassword },
+        { password: hashPassword },
         { new: true }
       );
+      
+      console.log("database: ", password)
       await db.disconnect();
       return res.status(200).json(password);
     } catch (err) {
