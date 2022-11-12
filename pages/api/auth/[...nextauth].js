@@ -34,6 +34,7 @@ export default NextAuth({
       },
     }),
   ],
+  
 
   callbacks: {
     async jwt({ token, user, account, profile, isNewUser }) {
@@ -52,4 +53,5 @@ export default NextAuth({
       return session;
     },
   },
+  secret: process.env.JWT_SECRET,
 });
