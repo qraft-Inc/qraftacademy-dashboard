@@ -5,8 +5,6 @@ import { Formik, Field, Form } from "formik";
 export default function EditAdminModal({ user, setEditModal }) {
   const { updateUser } = useContext(UserContext);
   const id = user._id;
-  // console.log("id: ",id)
-
 
   // initial form value
   const initialValues = {
@@ -16,9 +14,15 @@ export default function EditAdminModal({ user, setEditModal }) {
   };
 
   const onSubmit = async (values) => {
-    updateUser(id, values);
+    const result = {
+      email: values.email,
+      fullname: values.fullname,
+      telephone: values.telephone,
+      image: values.image,
+    };
+    // console.log(result);
+    updateUser(id, result);
     setEditModal(false);
-    // console.log(values)
   };
 
   return (
@@ -38,10 +42,7 @@ export default function EditAdminModal({ user, setEditModal }) {
                 <h2 className="text-lg text-center font-bold border-b-2 border-b-black">
                   Edit User
                 </h2>
-                <Formik
-                  initialValues={initialValues}
-                  onSubmit={onSubmit}
-                >
+                <Formik initialValues={initialValues} onSubmit={onSubmit}>
                   <Form className="pb-2 my-2">
                     <div className="mb-4">
                       <label
@@ -69,7 +70,7 @@ export default function EditAdminModal({ user, setEditModal }) {
                         name="fullname"
                       />
                     </div>
-                   
+
                     <div className="mb-4">
                       <label className="block text-sm font-bold mb-2">
                         Link to profile picture
@@ -81,10 +82,12 @@ export default function EditAdminModal({ user, setEditModal }) {
                         aria-label="photo"
                         name="photo"
                       />
-
                     </div>
                     <div className="flex gap-x-2">
-                      <button type="submit" className="w-full inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">
+                      <button
+                        type="submit"
+                        className="w-full inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out"
+                      >
                         Update
                       </button>
                       <button

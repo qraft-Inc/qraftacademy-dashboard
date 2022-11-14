@@ -23,19 +23,17 @@ export default async function handler(req, res) {
     // update user
     case "PUT":
       try {
-
         const user = await User.findByIdAndUpdate(
           { _id: userId },
           {
-            email: req.body.email,
-            fullname: req.body.fullname,
-            telephone: req.body.telephone,
-            image: req.body.image,
+            "user.email": req.body.user.email,
+            "user.fullname": req.body.user.fullname,
+            "user.telephone": req.body.user.telephone,
+            "user.image": req.body.user.image,
+          
           },
           { new: true }
         );
-        console.log("fullname: ",req.body.fullname)
-        // console.log(user)
         await db.disconnect();
         return res.status(200).json(user);
       } catch (err) {

@@ -68,7 +68,7 @@ export default function ResetPassword() {
             width={90}
             height={62}
             placeholder="blur"
-            // blurDataURL
+            blurDataURL
           />
         </div>
         <div className="flex flex-col items-center">

@@ -13,25 +13,6 @@ const UserContextProvider = (props) => {
   });
 
   // show all users
-  // const fetchUserData = async () => {
-  //   try {
-  //     setUserData({ ...userData, loading: true });
-  //     const response = await axios.get("/api/user");
-  //     setUserData({
-  //       ...userData,
-  //       users: response.data,
-  //       searchedData: response.data,
-  //       loading: false,
-  //     });
-  //   } catch (err) {
-  //     setUserData({ ...userData, loading: false, errorMessage: err.message });
-  //   }
-  // };
-
-  // useEffect(async () => {
-  //   fetchUserData();
-  // }, []);
-
   useEffect(() => {
     async function fetchUserData() {
       try {
@@ -62,9 +43,22 @@ const UserContextProvider = (props) => {
   };
 
   // update user
-  const updateUser = async (id, newFormData) => {
+  const updateUser = async (id, { newFormData }) => {
+    console.log("newFormData", newFormData);
+    // {email,fullname,image,telephone} : newFormData
+    const email = newFormData.email;
+    const fullname = newFormData.fullname;
+    const image = newFormData.image;
+    const telephone = newFormData.telephone;
+
     try {
-      const response = await axios.put(`/api/user/${id}`, newFormData);
+      const response = await axios.put(`api/user/${id}`, {
+        email,
+        fullname,
+        image,
+        telephone,
+      });
+      // console.log("reponse",response.data);
       setUserData({ ...userData, users: response.data });
       toast.success("Updated Successfully!", { position: "top-center" });
       fetchUserData();

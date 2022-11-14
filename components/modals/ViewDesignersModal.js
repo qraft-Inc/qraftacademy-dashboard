@@ -36,7 +36,7 @@ export default function ViewDesignersModal({ user, setViewModal }) {
                       className="col-auto rounded-full w-32"
                       width="100"
                       height="100"
-                      // blurDataURL
+                      blurDataURL
                     />
                   ) : (
                     <Image
@@ -45,7 +45,7 @@ export default function ViewDesignersModal({ user, setViewModal }) {
                       className="col-auto rounded-full w-32"
                       width="100"
                       height="100"
-                      // blurDataURL
+                      blurDataURL
                     />
                   )}
                 </span>
