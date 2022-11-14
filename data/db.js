@@ -19,12 +19,11 @@ async function connect() {
   let DB_URL;
   const env = process.env.NODE_ENV;
   if (env === "development") {
-    // DB_URL = process.env.DB_URL_DEV;
-    DB_URL = process.env.DB_URL_PROD;
+    DB_URL = process.env.DB_URL_DEV;
   } else if (env === "production") {
     DB_URL = process.env.DB_URL_PROD;
   }
-  
+
   const db = await mongoose.connect(DB_URL);
   console.log("New connection");
   connection.isConnected = db.connections[0].readyState;

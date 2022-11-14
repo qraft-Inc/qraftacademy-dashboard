@@ -38,14 +38,13 @@ export default function Signin() {
       email: values.email,
       password: values.password,
     });
-
-    onSubmitProps.resetForm();
     if (result?.error) {
       setError(result.error);
       setTimeout(() => {
         setError("");
       }, 5000);
     }
+    onSubmitProps.resetForm();
   };
 
   return (
@@ -60,7 +59,7 @@ export default function Signin() {
               width={90}
               height={62}
               placeholder="blur"
-              // blurDataURL
+              blurDataURL
             />
           </a>
         </Link>
@@ -79,7 +78,6 @@ export default function Signin() {
               className="w-full"
             >
               <Form>
-                {/* <form onSubmit={handleSubmit} className="space-y-2"> */}
                 <div className="rounded-md shadow-sm space-y-2">
                   <div>
                     <Field
@@ -93,16 +91,6 @@ export default function Signin() {
                     <div className="font-bold text-red-600 text-sm">
                       <ErrorMessage name="email" />
                     </div>
-
-                    {/* <input
-                    name="email"
-                    type="email"
-                    aria-label="email"
-                    autoComplete="email"
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Email address"
-                    onChange={(e) => setEmail(e.target.value)}
-                  /> */}
                   </div>
 
                   <div>
@@ -116,15 +104,6 @@ export default function Signin() {
                     <div className="font-bold text-red-600 text-sm">
                       <ErrorMessage name="password" />
                     </div>
-
-                    {/* <input
-                    name="password"
-                    type="password"
-                    aria-label="password"
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  /> */}
                   </div>
                 </div>
                 <div className="flex flex-col">
@@ -143,7 +122,6 @@ export default function Signin() {
                     <span className="text-red-500 text-center">{error}</span>
                   )}
                 </div>
-                {/* </form> */}
               </Form>
             </Formik>
           </div>
