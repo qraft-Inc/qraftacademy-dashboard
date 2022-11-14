@@ -3,43 +3,28 @@ import NextAuth from "next-auth";
 import User from "../../../model/User";
 import bcrypt from "bcryptjs";
 
-require("mongodb");
-
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Credentials",
       async authorize(credentials, req) {
-        // const { email, password } = credentials;
+        const { email, password } = credentials;
 
-        const email = credentials.email;
-        const password = credentials.password;
-
-        // const user = await User.findOne({ email });
-        const user = await User.findOne({ "user.email": credentials.email });
+        const user = await User.findOne({ "user.email": email });
 
         if (!user) {
           throw new Error("User does not exist");
         }
 
         if (user && bcrypt.compareSync(password, user.user.password)) {
-          // return {
-          //   _id: user._id,
-          //   email: user.user.email,
-          //   fullname: user.user.fullname,
-          //   isAdmin: user.user.isAdmin,
-          //   image: user.user.image,
-          // };
           return user;
         }
         throw new Error("Invalid credentials");
       },
     }),
   ],
-  
 
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user }) {
       if (user?._id) token._id = user._id;
       if (user?.user.isAdmin) token.isAdmin = user.user.isAdmin;
       if (user?.user.fullname) token.fullname = user.user.fullname;
