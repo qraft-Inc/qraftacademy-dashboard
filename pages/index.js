@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Admin from "../components/Admin";
 import Signin from "../components/Signin";
 
 export default function Home() {
@@ -13,7 +14,8 @@ export default function Home() {
 
         <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
       </Head>
-      <Signin />
+      {/* <Signin /> */}
+      <Admin/>
     </>
   );
 }
