@@ -3,6 +3,8 @@ import NextAuth from "next-auth";
 import User from "../../../model/User";
 import bcrypt from "bcryptjs";
 
+require("mongodb");
+
 export default NextAuth({
   providers: [
     CredentialsProvider({
