@@ -2,15 +2,17 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import User from "../../../model/User";
 import bcrypt from "bcryptjs";
+import db from "../../../data/db";
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
       async authorize(credentials, req) {
+        await db.connect();
         const { email, password } = credentials;
 
         const user = await User.findOne({ "user.email": email });
-
+        await db.disconnect();
         if (!user) {
           throw new Error("User does not exist");
         }
@@ -22,7 +24,9 @@ export default NextAuth({
       },
     }),
   ],
-
+  session: {
+    strategy: jwt,
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user?._id) token._id = user._id;
