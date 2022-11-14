@@ -39,12 +39,12 @@ export default function Signin() {
       password: values.password,
     });
 
-    // onSubmitProps.resetForm();
+    onSubmitProps.resetForm();
     if (result?.error) {
       setError(result.error);
-      // setTimeout(() => {
-      //   setError("");
-      // }, 5000);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
     }
   };
 
