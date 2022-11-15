@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         );
         await db.disconnect();
         return res.status(200).json(user);
-      } catch (err) {
+      } catch (err) { 
         res.status(500).json(err);
       }
       break;

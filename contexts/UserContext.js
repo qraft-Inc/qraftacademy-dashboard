@@ -43,22 +43,19 @@ const UserContextProvider = (props) => {
   };
 
   // update user
-  const updateUser = async (id, { newFormData }) => {
-    console.log("newFormData", newFormData);
+  const updateUser = async (id, newFormData) => {
+    // console.log("newFormData", newFormData);
     // {email,fullname,image,telephone} : newFormData
-    const email = newFormData.email;
-    const fullname = newFormData.fullname;
-    const image = newFormData.image;
-    const telephone = newFormData.telephone;
-
+    const formValues = {
+      email: newFormData.email,
+      fullname: newFormData.fullname,
+      image: newFormData.image,
+      telephone: newFormData.telephone
+    }
+    console.log("update values", formValues);
     try {
-      const response = await axios.put(`api/user/${id}`, {
-        email,
-        fullname,
-        image,
-        telephone,
-      });
-      // console.log("reponse",response.data);
+      const response = await axios.put(`api/user/${id}`, formValues);
+      console.log("reponse", response.data);
       setUserData({ ...userData, users: response.data });
       toast.success("Updated Successfully!", { position: "top-center" });
       fetchUserData();
