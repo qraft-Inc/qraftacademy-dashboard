@@ -18,6 +18,7 @@ const UserContextProvider = (props) => {
       try {
         setUserData({ ...userData, loading: true });
         const response = await axios.get("/api/user");
+
         setUserData({
           ...userData,
           users: response.data,
@@ -44,28 +45,33 @@ const UserContextProvider = (props) => {
 
   // update user
   const updateUser = async (id, newFormData) => {
-    // console.log("newFormData", newFormData);
-    // {email,fullname,image,telephone} : newFormData
     const formValues = {
       email: newFormData.email,
       fullname: newFormData.fullname,
       image: newFormData.image,
-      telephone: newFormData.telephone
-    }
-    console.log("update values", formValues);
+      telephone: newFormData.telephone,
+    };
+    
     try {
-      const response = await axios.put(`api/user/${id}`, formValues);
-      console.log("reponse", response.data);
-      setUserData({ ...userData, users: response.data });
-      toast.success("Updated Successfully!", { position: "top-center" });
-      fetchUserData();
+      const { data } = await axios.put(`api/user/${id}`, {newFormData});
+      // console.log(data);
+
+      // setUserData({ ...userData, users:data });
+      // toast.success("Updated Successfully!", { position: "top-center" });
+      // fetchUserData();
     } catch (err) {
-      setUserData({ ...userData, errorMessage: err.message });
+      // setUserData({ ...userData, errorMessage: err.message });
+      if (err.response.status === 404) {
+        console.log("Resource could not be found!");
+      } else {
+        console.log(err.message);
+      }
     }
   };
 
   // update user password
   const updatePassword = async (id, newPassword) => {
+    // console.log("password", newPassword)
     try {
       const response = await axios.put(`/api/password/${id}`, newPassword);
       setUserData({ ...userData, users: response.data });
@@ -78,8 +84,10 @@ const UserContextProvider = (props) => {
 
   // delete user
   const deleteUser = async (id) => {
+    console.log("password", id);
     try {
       const response = await axios.delete(`/api/user/${id}`);
+      // toast.success(response.data, { position: "top-center" });
       fetchUserData();
       toast.success(response.data, { position: "top-center" });
     } catch (err) {
