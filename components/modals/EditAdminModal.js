@@ -10,24 +10,19 @@ export default function EditAdminModal({ user, setEditModal }) {
   const initialValues = {
     email: user.user.email,
     fullname: user.user.fullname,
-    image: user.image,
+    image: user.user.image,
   };
 
   const onSubmit = async (values) => {
     const result = {
-      email: values.email,
-      fullname: values.fullname,
-      telephone: values.telephone,
-      image: values.image,
+      "user.user.email": values.email,
+      "user.user.fullname": values.fullname,
+      "user.user.image": values.image,
     };
     // console.log(result);
     updateUser(id, result);
     setEditModal(false);
   };
-
-
-  
-
 
   return (
     <>

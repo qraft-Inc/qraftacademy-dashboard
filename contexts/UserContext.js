@@ -44,28 +44,18 @@ const UserContextProvider = (props) => {
   };
 
   // update user
-  const updateUser = async (id, newFormData) => {
-    const formValues = {
-      email: newFormData.email,
-      fullname: newFormData.fullname,
-      image: newFormData.image,
-      telephone: newFormData.telephone,
-    };
-    
-    try {
-      const { data } = await axios.put(`api/user/${id}`, {newFormData});
-      // console.log(data);
 
-      // setUserData({ ...userData, users:data });
-      // toast.success("Updated Successfully!", { position: "top-center" });
-      // fetchUserData();
+  
+  const updateUser = async (id, newFormData) => {
+    try {
+      const res = await axios.put(`api/user/${id}`,  newFormData );
+      console.log(res);
+
+      setUserData({ ...userData, users: res.data });
+      toast.success("Updated Successfully!", { position: "top-center" });
+      fetchUserData();
     } catch (err) {
-      // setUserData({ ...userData, errorMessage: err.message });
-      if (err.response.status === 404) {
-        console.log("Resource could not be found!");
-      } else {
-        console.log(err.message);
-      }
+      setUserData({ ...userData, errorMessage: err.message });
     }
   };
 
