@@ -7,20 +7,33 @@ export default function EditAdminModal({ user, setEditModal }) {
   const id = user._id;
 
   // initial form value
+  // const initialValues = {
+  //   email: user.user.email,
+  //   fullname: user.user.fullname,
+  //   image: user.user.image,
+  // };
+
   const initialValues = {
-    email: user.user.email,
-    fullname: user.user.fullname,
-    image: user.user.image,
+    user: {
+      email: user.user.email,
+      fullname: user.user.fullname,
+      image: user.user.email
+    }
   };
 
+  // const onSubmit = async (values) => {
+  //   const result = {
+  //     "user.user.email": values.email,
+  //     "user.user.fullname": values.fullname,
+  //     "user.user.image": values.image,
+  //   };
+  //   updateUser(id, result);
+  //   setEditModal(false);
+  // };
+
+  
   const onSubmit = async (values) => {
-    const result = {
-      "user.user.email": values.email,
-      "user.user.fullname": values.fullname,
-      "user.user.image": values.image,
-    };
-    // console.log(result);
-    updateUser(id, result);
+    updateUser(id,values);
     setEditModal(false);
   };
 
@@ -54,7 +67,7 @@ export default function EditAdminModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="email"
                         aria-label="email"
-                        name="email"
+                        name="user.email"
                       />
                     </div>
                     <div className="mb-4">
@@ -66,7 +79,7 @@ export default function EditAdminModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="text"
                         aria-label="text"
-                        name="fullname"
+                        name="user.fullname"
                       />
                     </div>
 
@@ -79,7 +92,7 @@ export default function EditAdminModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="text"
                         aria-label="photo"
-                        name="photo"
+                        name="user.photo"
                       />
                     </div>
                     <div className="flex gap-x-2">

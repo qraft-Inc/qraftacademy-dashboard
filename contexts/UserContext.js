@@ -45,13 +45,13 @@ const UserContextProvider = (props) => {
 
   // update user
 
-  
+
   const updateUser = async (id, newFormData) => {
     try {
-      const res = await axios.put(`api/user/${id}`,  newFormData );
-      console.log(res);
+      const { data } = await axios.put(`api/user/${id}`, newFormData);
+      console.log(data.user.user);
 
-      setUserData({ ...userData, users: res.data });
+      setUserData({ ...userData, users: data.user.user });
       toast.success("Updated Successfully!", { position: "top-center" });
       fetchUserData();
     } catch (err) {
@@ -61,7 +61,6 @@ const UserContextProvider = (props) => {
 
   // update user password
   const updatePassword = async (id, newPassword) => {
-    // console.log("password", newPassword)
     try {
       const response = await axios.put(`/api/password/${id}`, newPassword);
       setUserData({ ...userData, users: response.data });
