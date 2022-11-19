@@ -16,8 +16,8 @@ import Spinner from "./Spinner";
 
 export default function Admin() {
   const [searchName, setSearchName] = useState({ text: "" });
-  const { userData, setUserData } = useContext(UserContext);
-  const { searchedData, users, loading } = userData;
+  const { state, setState } = useContext(UserContext);
+  const { searchedData, users, loading } = state;
   const [courseList, setCourseList] = useState("admin");
   const [admin, setAdmin] = useState(false);
   const [marketing, setMarketing] = useState(false);
@@ -34,7 +34,7 @@ export default function Admin() {
     const result = users.filter((user) => {
       return user.user.fullname.toLowerCase().includes(e.target.value.toLowerCase());
     });
-    setUserData({ ...userData, searchedData: result });
+    setState({ ...state, searchedData: result });
   };
 
   useEffect(() => {
@@ -187,7 +187,6 @@ export default function Admin() {
               {searchedData.length > 0 &&
                 searchedData.map((user) => (
                   <Fragment key={user._id}>
-                    {/* <pre>{JSON.stringify(user.marketing)}</pre> */}
                     {user.user.isAdmin === true && admin ? (
                       <AdminList user={user} />
                     ) : null}
@@ -209,7 +208,7 @@ export default function Admin() {
           </section>
         )}
         {showAddModal ? (
-          <AddModal setAddModal={setAddModal} setUserData={setUserData} />
+          <AddModal setAddModal={setAddModal} setState={setState} />
         ) : null}
       </div>
       <Footer />

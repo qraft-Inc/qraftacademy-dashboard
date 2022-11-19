@@ -6,19 +6,21 @@ export default function EditDeveloperModal({ user, setEditModal }) {
   const { updateUser } = useContext(UserContext);
   const id = user._id;
 
-
   // initial form value
   const initialValues = {
-    email: user.user.email,
-    fullname: user.user.fullname,
-    telephone: user.developers.telephone,
-    image: user.user.image,
+    user: {
+      email: user.user.email,
+      fullname: user.user.fullname,
+      image: user.user.image,
+    },
+    developers: {
+      telephone: user.developers.telephone,
+    },
   };
 
   const onSubmit = async (values) => {
     updateUser(id, values);
     setEditModal(false);
-    console.log(values)
   };
 
   return (
@@ -38,10 +40,7 @@ export default function EditDeveloperModal({ user, setEditModal }) {
                 <h2 className="text-lg text-center font-bold border-b-2 border-b-black">
                   Edit User
                 </h2>
-                <Formik
-                  initialValues={initialValues}
-                  onSubmit={onSubmit}
-                >
+                <Formik initialValues={initialValues} onSubmit={onSubmit}>
                   <Form className="pb-2 my-2">
                     <div className="mb-4">
                       <label
@@ -54,7 +53,7 @@ export default function EditDeveloperModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="email"
                         aria-label="email"
-                        name="email"
+                        name="user.email"
                       />
                     </div>
                     <div className="mb-4">
@@ -66,7 +65,7 @@ export default function EditDeveloperModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="text"
                         aria-label="text"
-                        name="fullname"
+                        name="user.fullname"
                       />
                     </div>
                     <div className="mb-4">
@@ -78,7 +77,7 @@ export default function EditDeveloperModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="text"
                         aria-label="text"
-                        name="telephone"
+                        name="developers.telephone"
                       />
                     </div>
                     <div className="mb-4">
@@ -90,12 +89,14 @@ export default function EditDeveloperModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="text"
                         aria-label="photo"
-                        name="photo"
+                        name="user.photo"
                       />
-
                     </div>
                     <div className="flex gap-x-2">
-                      <button type="submit" className="w-full inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">
+                      <button
+                        type="submit"
+                        className="w-full inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out"
+                      >
                         Update
                       </button>
                       <button

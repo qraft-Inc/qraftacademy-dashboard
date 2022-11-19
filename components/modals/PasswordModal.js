@@ -3,20 +3,19 @@ import { UserContext } from "../../contexts/UserContext";
 import { Formik, Field, Form } from "formik";
 
 export default function PasswordModal({ user, setPasswordModal }) {
-
   const { updatePassword } = useContext(UserContext);
   const id = user._id;
 
-
   // initial form value
   const initialValues = {
-    password: user.user.password,
+    user: {
+      password: user.user.password,
+    },
   };
 
   const onSubmit = async (values) => {
     updatePassword(id, values);
     setPasswordModal(false);
-
   };
 
   return (
@@ -38,7 +37,6 @@ export default function PasswordModal({ user, setPasswordModal }) {
                 </h2>
                 <Formik initialValues={initialValues} onSubmit={onSubmit}>
                   <Form className="pb-2 my-2">
-
                     <div className="mb-4">
                       <label className="block text-sm font-bold mb-2">
                         Password
@@ -47,7 +45,7 @@ export default function PasswordModal({ user, setPasswordModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="password"
                         aria-label="password"
-                        name="password"
+                        name="user.password"
                       />
                     </div>
                     <div className="flex gap-x-2">
