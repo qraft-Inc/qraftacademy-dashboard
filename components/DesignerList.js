@@ -26,7 +26,7 @@ export default function DesignerList({ user }) {
   return (
     <>
       <div className="sm:w-max p-1 flex gap-1 items-center rounded-lg border bg-white shadow-md md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-        {user.image ? (
+        {user.user.image ? (
           <div className="w-20 md:w-20">
             <Image
               alt="profile pic"

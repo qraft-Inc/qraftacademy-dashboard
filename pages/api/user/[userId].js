@@ -38,27 +38,7 @@ export default async function handler(req, res) {
           },
           { new: true }
         );
-
-        // const user = await User.findOne({userId});
-        // await db.disconnect();
-        // user.user.email = req.body.user.email;
-        // user.user.fullname = req.body.user.fullname;
-        // user.user.image = req.body.user.image;
-        // await user.save();
-        // return res.status(200).json({ success: true, user });
-        // }
-
-        // if (userId) {
-
-        //   const user = await User.findByIdAndUpdate(userId, {
-        //     "user.user.email": req.body.user.email,
-        //     "user.user.fullname": req.body.user.fullname,
-        //     "user.user.image": req.body.user.image,
-
-        //   });
-
-          return res.status(200).json({ success: true, user });
-        // }
+        return res.status(200).json({ success: true, user });
       } catch (err) {
         res
           .status(500)

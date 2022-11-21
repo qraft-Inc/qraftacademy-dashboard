@@ -89,7 +89,7 @@ export default function EditMarketingModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="text"
                         aria-label="photo"
-                        name="user.photo"
+                        name="user.image"
                       />
                     </div>
                     <div className="flex gap-x-2">

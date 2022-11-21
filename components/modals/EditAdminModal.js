@@ -10,7 +10,7 @@ export default function EditAdminModal({ user, setEditModal }) {
     user: {
       email: user.user.email,
       fullname: user.user.fullname,
-      image: user.user.email
+      image: user.user.image
     }
   };
   
@@ -74,7 +74,7 @@ export default function EditAdminModal({ user, setEditModal }) {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="text"
                         aria-label="photo"
-                        name="user.photo"
+                        name="user.image"
                       />
                     </div>
                     <div className="flex gap-x-2">

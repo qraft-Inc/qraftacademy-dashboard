@@ -81,8 +81,8 @@ const UserContextProvider = (props) => {
   // update user password
   const updatePassword = async (id, newPassword) => {
     try {
-      const response = await axios.put(`/api/password/${id}`, newPassword);
-      // setState({ ...state, users: response.data });
+      const {data} = await axios.put(`/api/password/${id}`, newPassword);
+      console.log({data})
       setState({ ...state, users: data.user.user });
       toast.success("Updated Successfully!", { position: "top-center" });
       fetchUserData();
