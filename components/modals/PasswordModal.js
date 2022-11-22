@@ -4,7 +4,7 @@ import { Formik, Field, Form } from "formik";
 
 export default function PasswordModal({ user, setPasswordModal }) {
   const { updatePassword } = useContext(UserContext);
-  const id = user._id;
+  const userId = user._id;
 
   // initial form value
   const initialValues = {
@@ -14,7 +14,7 @@ export default function PasswordModal({ user, setPasswordModal }) {
   };
 
   const onSubmit = async (values) => {
-    updatePassword(id, values);
+    updatePassword(userId, values);
     setPasswordModal(false);
   };
 

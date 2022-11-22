@@ -4,7 +4,7 @@ import { Formik, Field, Form } from "formik";
 
 export default function EditMarketingModal({ user, setEditModal }) {
   const { updateUser } = useContext(UserContext);
-  const id = user._id;
+  const userId = user._id;
 
   // initial form value
   const initialValues = {
@@ -19,7 +19,7 @@ export default function EditMarketingModal({ user, setEditModal }) {
   };
 
   const onSubmit = async (values) => {
-    updateUser(id, values);
+    updateUser(userId, values);
     setEditModal(false);
   };
 

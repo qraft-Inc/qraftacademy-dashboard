@@ -29,10 +29,10 @@ export default function ViewMarketingModal({ user, setViewModal }) {
               </div>
               <div className="px-4 pb-4 sm:p-6 sm:pb-4">
                 <span>
-                  {user.image ? (
+                  {user.user.image ? (
                     <Image
                       alt="profile pic"
-                      src={user.image}
+                      src={user.user.image}
                       className="col-auto rounded-full w-32"
                       width="100"
                       height="100"

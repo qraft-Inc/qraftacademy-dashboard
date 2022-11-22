@@ -4,7 +4,7 @@ import { Formik, Field, Form } from "formik";
 
 export default function EditAdminModal({ user, setEditModal }) {
   const { updateUser } = useContext(UserContext);
-  const id = user._id;
+  const userId = user._id;
 
   const initialValues = {
     user: {
@@ -15,7 +15,7 @@ export default function EditAdminModal({ user, setEditModal }) {
   };
   
   const onSubmit = async (values) => {
-    updateUser(id,values);
+    updateUser(userId,values);
     setEditModal(false);
   };
 

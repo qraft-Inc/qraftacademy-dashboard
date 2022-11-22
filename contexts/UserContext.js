@@ -54,9 +54,9 @@ const UserContextProvider = (props) => {
     fetchUserData();
   }, []);
 
-  const addUser = async (newUser) => {
+  const addAdmin = async (newAdmin) => {
     try {
-      const response = await axios.post(`/api/user`, newUser);
+      const response = await axios.post(`/api/user`, newAdmin);
       setState({ ...state, users: response.data });
       toast.success("Added Successfully!", { position: "top-center" });
       fetchUserData();
@@ -67,9 +67,9 @@ const UserContextProvider = (props) => {
 
   // update user
 
-  const updateUser = async (id, newFormData) => {
+  const updateUser = async (userId, newFormData) => {
     try {
-      const { data } = await axios.put(`api/user/${id}`, newFormData);
+      const { data } = await axios.put(`api/user/${userId}`, newFormData);
       setState({ ...state, users: data.user.user });
       toast.success("Updated Successfully!", { position: "top-center" });
       fetchUserData();
@@ -79,9 +79,9 @@ const UserContextProvider = (props) => {
   };
 
   // update user password
-  const updatePassword = async (id, newPassword) => {
+  const updatePassword = async (userId, newPassword) => {
     try {
-      const {data} = await axios.put(`/api/password/${id}`, newPassword);
+      const {data} = await axios.put(`/api/password/${userId}`, newPassword);
       console.log({data})
       setState({ ...state, users: data.user.user });
       toast.success("Updated Successfully!", { position: "top-center" });
@@ -92,9 +92,9 @@ const UserContextProvider = (props) => {
   };
 
   // delete user
-  const deleteUser = async (id) => {
+  const deleteUser = async (userId) => {
     try {
-      const response = await axios.delete(`/api/user/${id}`);
+      const response = await axios.delete(`/api/user/${userId}`);
       toast.success(response.data, { position: "top-center" });
       fetchUserData();
     } catch (err) {
@@ -110,7 +110,7 @@ const UserContextProvider = (props) => {
         updateUser,
         updatePassword,
         deleteUser,
-        addUser,
+        addAdmin,
       }}
     >
       {props.children}
