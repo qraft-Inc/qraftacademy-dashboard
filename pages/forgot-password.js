@@ -1,35 +1,62 @@
 import Head from "next/head";
-import { useState} from "react";
+import { useState } from "react";
 import logo from "../public/images/logo.png";
 import Image from "next/image";
 import Footer from "../components/Footer";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  console.log(success)
 
-  const handleSubmit = async (e) => {
-    
-    try {
-      e.preventDefault();
-      const { data } = await axios.post(`/api/auth/forgot-password`, { email });
-      setSuccess(data.message);
-      toast.success(`Check Your Email`, { position: "top-center", theme: "colored", autoClose: 2000 });
-      setEmail("");
-    } catch (error) {
-      console.log(error)
-      setError(error.response.data.error);
-      setEmail("");
-      setTimeout(() => {
-        setError("");
-      }, 5000);
+  // const handleSubmit = async (e) => {
+
+  //   try {
+  //     e.preventDefault();
+  //     const { data } = await axios.post(`/api/auth/forgot-password`, { email });
+  //     setSuccess(data.message);
+  //     toast.success(`Check Your Email`, { position: "top-center", theme: "colored", autoClose: 2000 });
+  //     setEmail("");
+  //   } catch (error) {
+  //     console.log(error)
+  //     setError(error.response.data.error);
+  //     setEmail("");
+  //     setTimeout(() => {
+  //       setError("");
+  //     }, 5000);
+  //   }
+  // };
+
+
+  // initial form value
+  const initialValues = {
+    user: {
+      email: ""
     }
   };
 
+
+  const onSubmit = async (values, onSubmitProps) => {
+    try {
+      const { data } = await axios.post(`/api/auth/forgot-password`, values);
+      setSuccess(data.message);
+
+      toast.success(`Check Your Email`, { position: "top-center", theme: "colored", autoClose: 2000 });
+      onSubmitProps.resetForm();
+    }
+    catch (error) {
+      setError(error.response.data.error);
+      onSubmitProps.resetForm();
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+
+    }
+  };
   return (
     <>
       <Head>
@@ -59,29 +86,44 @@ export default function ForgotPassword() {
                 create a new password.
               </span>
 
-              <form onSubmit={handleSubmit} className="space-y-2">
-                <div className="rounded-md shadow-sm">
-                  <div>
-                    <input
-                      id="email-address"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required=""
-                      className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                      placeholder="Email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
+              {/* <form onSubmit={handleSubmit} className="space-y-2"> */}
+              <Formik
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                className="space-y-2"
+              >
+                <Form>
+                  <div className="rounded-md shadow-sm">
+                    <div>
+                      {/* <input
+                        id="email-address"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required=""
+                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        placeholder="Email address"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      /> */}
+
+                      <Field
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                        type="email"
+                        aria-label="email"
+                        name="user.email"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-col">
-                  <button className="rounded-lg bg-[#4092CF] text-base px-3 py-2 hover:bg-blue-400 transition duration-300">
-                    Send Email
-                  </button>
-                  {error && <span className="text-red-500">{error}</span>}
-                </div>
-              </form>
+                  <div className="flex flex-col">
+                    <button type="submit" className="rounded-lg bg-[#4092CF] text-base px-3 py-2 hover:bg-blue-400 transition duration-300">
+                      Send Email
+                    </button>
+                    {error && <span className="text-red-500">{error}</span>}
+                  </div>
+                  {/* </form> */}
+                </Form>
+              </Formik>
             </div>
           </div>
         </div>

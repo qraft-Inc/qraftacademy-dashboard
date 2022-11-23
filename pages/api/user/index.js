@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const { email } = req.body.user;
-        const existingUser = await UserModel.findOne({ email });
+        const existingUser = await UserModel.findOne({ "user.email": email });
 
         if (existingUser) {
           return res

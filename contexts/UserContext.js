@@ -12,29 +12,6 @@ const UserContextProvider = (props) => {
     errorMessage: "",
   });
 
-  // show all users
-  // useEffect(() => {
-  //   async function fetchUserData() {
-  //     try {
-  //       setState({ ...state, loading: true });
-  //       const response = await axios.get("/api/user");
-
-  //       setState({
-  //         ...state,
-  //         users: response.data,
-  //         searchedData: response.data,
-  //         loading: false,
-  //       });
-
-  //     }
-
-  //     catch (err) {
-  //       setState({ ...state, loading: false, errorMessage: err.message });
-  //     }
-  //   }
-  //   fetchUserData();
-  // }, []);
-
   const fetchUserData = async () => {
     try {
       setState({ ...state, loading: true });
@@ -82,7 +59,6 @@ const UserContextProvider = (props) => {
   const updatePassword = async (userId, newPassword) => {
     try {
       const {data} = await axios.put(`/api/password/${userId}`, newPassword);
-      console.log({data})
       setState({ ...state, users: data.user.user });
       toast.success("Updated Successfully!", { position: "top-center" });
       fetchUserData();
