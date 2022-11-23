@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport(
 );
 
 export default async function handler(req, res) {
-  // const { method } = req;
   await db.connect();
   if (req.method === "POST") {
     try {
@@ -24,9 +23,9 @@ export default async function handler(req, res) {
         const tokenid = buffer.toString("hex");
 
         const { email } = req.body.user;
-        // console.log("EMAIL :", email)
+
         const user = await User.findOne({ "user.email": email });
-        // console.log(user)
+
         if (!user) {
           return res
             .status(404)
@@ -43,7 +42,7 @@ export default async function handler(req, res) {
         await user.save();
         await transporter.sendMail({
           to: user.user.email,
-        
+
           from: process.env.EMAIL_FROM,
           subject: "Password Reset Request",
           html: message,

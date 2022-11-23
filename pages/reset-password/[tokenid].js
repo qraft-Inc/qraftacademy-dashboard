@@ -6,38 +6,47 @@ import Image from "next/image";
 import Footer from "../../components/Footer";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { Formik, Field, Form } from "formik";
 
 export default function ResetPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const router = useRouter()
-  const { tokenid } = router.query
+  const router = useRouter();
+  
+  const { tokenid } = router.query;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // initial form value
+  const initialValues = {
+    user: {
+      password: "",
+    },
+    confirmPassword: "",
+  };
 
-    if (password !== confirmPassword) {
-      setPassword("");
-      setConfirmPassword("");
+  const onSubmit = async (values, onSubmitProps) => {
+    if (values.user.password !== values.confirmPassword) {
+      onSubmitProps.resetForm();
       setTimeout(() => {
         setError("");
       }, 5000);
       return setError("Passwords Don't Match");
     }
-
     try {
-      const { data } = await axios.post(`/api/auth/reset-password/${tokenid}`, { password });
-      setSuccess(data.success);
-      setPassword("");
-      setConfirmPassword("");
-      toast.success(`Password Reset Success`, { position: "top-center", theme: "colored", autoClose: 2000, });
+      const { data } = await axios.post(
+        `/api/auth/reset-password/${tokenid}`,
+        values
+      );
+
+      setSuccess(data.message);
+      onSubmitProps.resetForm();
+      toast.success(`Password Reset Success`, {
+        position: "top-center",
+        theme: "colored",
+        autoClose: 2000,
+      });
     } catch (error) {
       setError(error.response.data.error);
-      setPassword("");
-      setConfirmPassword("");
+      onSubmitProps.resetForm();
       setTimeout(() => {
         setError("");
       }, 5000);
@@ -72,51 +81,54 @@ export default function ResetPassword() {
           />
         </div>
         <div className="flex flex-col items-center">
-            <div className="w-80 space-y-8">
-              <div className="flex flex-col items-center">
+          <div className="w-80 space-y-8">
+            <div className="flex flex-col items-center">
               <h2 className="text-3xl font-extrabold text-gray-900">
                 Reset Password
               </h2>
               <span className="text-sm font-normal">
                 Enter you new password below.
               </span>
-              </div>
+            </div>
 
-              <form onSubmit={handleSubmit} className="space-y-2">
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              className="space-y-2"
+            >
+              <Form>
                 <div className="rounded-md shadow-sm space-y-2">
                   <div>
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      required
+                    <Field
                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      type="password"
+                      aria-label="password"
                       placeholder="Enter new password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="user.password"
                     />
                   </div>
                   <div>
-                    <input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type="password"
-                      required
+                    <Field
                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      type="password"
+                      aria-label="confirmPassword"
                       placeholder="Confirm new password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      name="confirmPassword"
                     />
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <button className="rounded-lg bg-[#4092CF] text-base px-3 py-2 hover:bg-blue-400 transition duration-300">
+                  <button
+                    type="submit"
+                    className="rounded-lg bg-[#4092CF] text-base px-3 py-2 hover:bg-blue-400 transition duration-300"
+                  >
                     Reset Password
                   </button>
                   {error && <span className="text-red-500">{error}</span>}
                 </div>
-              </form>
-            </div>
+              </Form>
+            </Formik>
+          </div>
         </div>
         <Footer />
       </div>
