@@ -9,7 +9,6 @@ import { Formik, Field, Form } from "formik";
 
 export default function ForgotPassword() {
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   // initial form value
   const initialValues = {
@@ -21,9 +20,9 @@ export default function ForgotPassword() {
   const onSubmit = async (values, onSubmitProps) => {
     try {
       const { data } = await axios.post(`/api/auth/forgot-password`, values);
-      setSuccess(data.message);
+      console.log(data);
 
-      toast.success(`Check Your Email`, {
+      toast.success(data.message, {
         position: "top-center",
         theme: "colored",
         autoClose: 2000,
@@ -91,7 +90,6 @@ export default function ForgotPassword() {
                     </button>
                     {error && <span className="text-red-500">{error}</span>}
                   </div>
-           
                 </Form>
               </Formik>
             </div>

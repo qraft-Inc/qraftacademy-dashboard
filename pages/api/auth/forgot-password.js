@@ -16,39 +16,42 @@ export default async function handler(req, res) {
   await db.connect();
   if (req.method === "POST") {
     try {
-      crypto.randomBytes(32, async (err, buffer) => {
-        if (err) {
-          console.log(err);
-        }
-        const tokenid = buffer.toString("hex");
+      const { email } = req.body.user;
 
-        const { email } = req.body.user;
+      const user = await User.findOne({ "user.email": email });
 
-        const user = await User.findOne({ "user.email": email });
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Email Could Not Be Sent" });
+      }
+      const resetToken = user.getResetPasswordToken();
 
-        if (!user) {
-          return res
-            .status(404)
-            .json({ success: false, error: "Email Could Not Be Sent" });
-        }
-        user.resetPasswordToken = tokenid;
-        user.resetPasswordExpire = Date.now() + 3600000;
+      await user.save();
 
-        const resetUrl = `${process.env.RESET_URL}/reset-password/${tokenid}`;
-        const message = `<h1>You requested a password reset</h1>
-                    <p>click this link to reset password</p>
-                        <a href=${resetUrl} clicktracking=off>${resetUrl}</a>`;
+      const resetUrl = `${process.env.RESET_URL}/reset-password/${resetToken}`;
 
-        await user.save();
+      const message = `<h1>You requested a password reset</h1>
+                  <p>click this link to reset password</p>
+                      <a href=${resetUrl} clicktracking=off>${resetUrl}</a>`;
+      try {
         await transporter.sendMail({
           to: user.user.email,
-
           from: process.env.EMAIL_FROM,
           subject: "Password Reset Request",
           html: message,
         });
         res.status(200).json({ success: true, message: "Check You Email" });
-      });
+      } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save();
+
+        return res
+          .status(500)
+          .json({ success: false, message: "Email could not be sent" });
+      }
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
