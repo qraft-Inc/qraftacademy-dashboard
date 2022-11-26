@@ -34,6 +34,8 @@ export default async function handler(req, res) {
       const message = `<h1>You requested a password reset</h1>
                   <p>click this link to reset password</p>
                       <a href=${resetUrl} clicktracking=off>${resetUrl}</a>`;
+
+
       try {
         await transporter.sendMail({
           to: user.user.email,
@@ -42,9 +44,10 @@ export default async function handler(req, res) {
           html: message,
         });
         res.status(200).json({ success: true, message: "Check You Email" });
+
       } catch (error) {
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
+        user.user.resetPasswordToken = undefined;
+        user.user.resetPasswordExpire = undefined;
 
         await user.save();
 
@@ -52,6 +55,8 @@ export default async function handler(req, res) {
           .status(500)
           .json({ success: false, message: "Email could not be sent" });
       }
+
+      console.log(user)
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

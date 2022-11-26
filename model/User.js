@@ -4,12 +4,15 @@ import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
   {
+
     user: {
       email: { type: String, required: true, unique: true },
       password: { type: String },
       fullname: { type: String },
       image: { type: String },
       isAdmin: { type: Boolean, required: true, default: false },
+      resetPasswordToken: { type: String },
+      resetPasswordExpire: Date,
     },
 
     developers: {
@@ -58,14 +61,14 @@ const userSchema = new mongoose.Schema(
       textarea7: { type: String },
     },
   },
-  {
-    timestamps: true,
-    // resetPasswordToken: { type: String },
-    // resetPasswordExpire: Date,
+  // {
+  { timestamps: true },
+  // resetPasswordToken: { type: String },
+  // resetPasswordExpire: Date,
 
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
-  }
+  // { resetPasswordToken: String },
+  // { resetPasswordExpire: Date },
+  // }
 );
 
 userSchema.pre("save", async function (next) {
@@ -82,12 +85,12 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.getResetPasswordToken = function () {
   const resetToken = crypto.randomBytes(20).toString("hex");
 
-  this.resetPasswordToken = crypto
+  this.user.resetPasswordToken = crypto
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");
 
-  this.resetPasswordExpire = Date.now() + 3600000;
+  this.user.resetPasswordExpire = Date.now() + 10 * (60 * 1000);
   return resetToken;
 };
 

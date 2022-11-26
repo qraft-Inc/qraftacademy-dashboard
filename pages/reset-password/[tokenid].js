@@ -33,7 +33,7 @@ export default function ResetPassword() {
     }
     try {
       const { data } = await axios.post(
-        `/api/auth/reset-password/${tokenid}`,
+        `/api/auth/reset-password/${resetToken}`,
         values
       );
 

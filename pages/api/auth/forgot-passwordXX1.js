@@ -20,12 +20,11 @@ export default async function handler(req, res) {
         if (err) {
           console.log(err);
         }
-        const tokenid = buffer.toString("hex");
+        const resetToken = buffer.toString("hex");
 
         const { email } = req.body.user;
 
         const user = await User.findOne({ "user.email": email });
-        // console.log(user);
 
         if (!user) {
           return res
@@ -33,10 +32,10 @@ export default async function handler(req, res) {
             .json({ success: false, error: "Email Could Not Be Sent" });
         }
 
-        user.resetPasswordToken = tokenid;
-        user.resetPasswordExpire = Date.now() + 3600000;
+        user.user.resetPasswordToken = resetToken;
+        user.user.resetPasswordExpire = Date.now() + 3600000;
 
-        const resetUrl = `${process.env.RESET_URL}/reset-password/${tokenid}`;
+        const resetUrl = `${process.env.RESET_URL}/reset-password/${resetToken}`;
         const message = `<h1>You requested a password reset</h1>
                     <p>click this link to reset password</p>
                         <a href=${resetUrl} clicktracking=off>${resetUrl}</a>`;
