@@ -13,7 +13,7 @@ export default function ResetPassword() {
   const [success, setSuccess] = useState("");
   const router = useRouter();
   
-  const { tokenid } = router.query;
+  const { resetToken } = router.query;
 
   // initial form value
   const initialValues = {
@@ -32,7 +32,7 @@ export default function ResetPassword() {
       return setError("Passwords Don't Match");
     }
     try {
-      const { data } = await axios.post(
+      const { data } = await axios.put(
         `/api/auth/reset-password/${resetToken}`,
         values
       );

@@ -4,7 +4,6 @@ import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
   {
-
     user: {
       email: { type: String, required: true, unique: true },
       password: { type: String },
@@ -61,18 +60,16 @@ const userSchema = new mongoose.Schema(
       textarea7: { type: String },
     },
   },
-  // {
-  { timestamps: true },
-  // resetPasswordToken: { type: String },
-  // resetPasswordExpire: Date,
 
-  // { resetPasswordToken: String },
-  // { resetPasswordExpire: Date },
-  // }
+  { timestamps: true }
 );
 
 userSchema.pre("save", async function (next) {
   try {
+    //check if password is modified
+    if (!this.isModified("user.password")) {
+      next();
+    }
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(this.user.password, salt);
     this.user.password = hashPassword;

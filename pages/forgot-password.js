@@ -20,7 +20,6 @@ export default function ForgotPassword() {
   const onSubmit = async (values, onSubmitProps) => {
     try {
       const { data } = await axios.post(`/api/auth/forgot-password`, values);
-      console.log(data);
 
       toast.success(data.message, {
         position: "top-center",

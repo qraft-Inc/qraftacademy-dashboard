@@ -12,6 +12,7 @@ export default async function handler(req, res) {
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(req.body.user.password, salt);
 
+      //update user password
       const user = await User.findByIdAndUpdate(
         userId,
         {

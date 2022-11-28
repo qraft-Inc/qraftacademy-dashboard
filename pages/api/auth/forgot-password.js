@@ -2,7 +2,6 @@ import db from "../../../data/db";
 import User from "../../../model/User";
 import nodemailer from "nodemailer";
 import sendgridTransport from "nodemailer-sendgrid-transport";
-import crypto from "crypto";
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -35,8 +34,8 @@ export default async function handler(req, res) {
                   <p>click this link to reset password</p>
                       <a href=${resetUrl} clicktracking=off>${resetUrl}</a>`;
 
-
       try {
+        //send email 
         await transporter.sendMail({
           to: user.user.email,
           from: process.env.EMAIL_FROM,
@@ -44,7 +43,6 @@ export default async function handler(req, res) {
           html: message,
         });
         res.status(200).json({ success: true, message: "Check You Email" });
-
       } catch (error) {
         user.user.resetPasswordToken = undefined;
         user.user.resetPasswordExpire = undefined;
@@ -55,8 +53,6 @@ export default async function handler(req, res) {
           .status(500)
           .json({ success: false, message: "Email could not be sent" });
       }
-
-      console.log(user)
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
