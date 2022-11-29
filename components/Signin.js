@@ -50,7 +50,7 @@ export default function Signin() {
   return (
     <div className="flex flex-col h-screen justify-between">
       <div className="flex justify-start p-4 ">
-        <Link href="https://qraft-academy.netlify.app" passHref legacyBehavior>
+        <Link href="https://www.qraftacademy.org" passHref legacyBehavior>
           <a>
             <Image
               alt="profile pic"
